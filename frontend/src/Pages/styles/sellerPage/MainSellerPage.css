@@ -1,0 +1,25 @@
+.sellerpage {
+  height: 90vh;
+  width: 95vw;
+  position: relative;
+  left: 25px;
+  top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+.sell {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(8, 1fr);
+  row-gap: 30px;
+  width: 100%;
+  place-items: center;
+}
+.sellerpagemenu {
+  color: black;
+  font-weight: 700;
+}
+.div2 {
+  border: 2px solid rgb(165, 165, 165);
+  border-radius: 15px;
+}

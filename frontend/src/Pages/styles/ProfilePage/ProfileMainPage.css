@@ -1,0 +1,32 @@
+.profilepage {
+  height: 90vh;
+  width: 95vw;
+  position: relative;
+  left: 25px;
+  top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.user {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(8, 1fr);
+  row-gap: 60px;
+  place-items: center;
+  color: black;
+}
+
+.profilepagemenu {
+  color: black;
+  font-weight: 800;
+}
+
+.profilepagemenu:hover {
+  cursor: pointer;
+}
+
+.user-div2 {
+  border: 2px solid rgb(165, 165, 165);
+  border-radius: 15px;
+}

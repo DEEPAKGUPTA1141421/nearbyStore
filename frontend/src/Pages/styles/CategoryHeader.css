@@ -1,0 +1,39 @@
+.directMenu{
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    justify-content: space-around;
+    font-size: 1rem;
+    position: absolute;
+    left:0%;
+    right:0%;
+    top:0%;
+    bottom:0%;
+  }
+  .selected{
+    color:blueviolet;
+  }
+  .notselected:hover{
+    color: brown;
+  }
+  .linkCategory{
+    display: flex;
+    flex-direction: column;
+    color: black;
+    font-size: 1rem;
+    padding:10px 5px;
+    text-decoration: 'none'
+  }
+  .subMenu{
+    /* /* display: grid;
+    grid-template-columns: 1fr 1fr; */
+     display: none;
+     width: fit-content;
+     height:ascept-ratio;
+     border:5px solid green;
+      background-color: blueviolet;
+     /* border-bottom-color: aquamarine;
+     border-top-color:black ; */
+     border-color:goldenrod ;
+     /* border-right-color:yellowgreen ; */
+  }

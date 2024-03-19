@@ -1,0 +1,48 @@
+.admingrid{
+    display: grid;
+    grid-template-columns:1fr 4fr;
+}
+.admingridleft{
+    /* background: rgb(2,0,36); */
+    /* background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(169,169,173,1) 35%, rgba(0,212,255,1) 100%); */
+    display: flex;
+    justify-content: center;
+    height:100vh;
+    align-items: center;
+}
+.admingridright{
+    display: flex;
+    justify-content: center;
+}
+.singleprocessing{
+    display: flex;
+    font-size:large;
+    flex-direction: row;
+    justify-content: space-around;
+    color:black;
+}
+.rider-list {
+    display: flex;
+  }
+  
+  .ridermaindiv {
+    margin-bottom: 20px; /* Adds gap between each item */
+  }
+  
+  .info-item {
+    margin-bottom: 10px; /* Adds gap between each info item */
+  }
+  
+  .pay-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .pay-button:hover {
+    background-color: #0056b3;
+  }
+  

@@ -1,0 +1,26 @@
+.sell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.sellerpagemenu {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.sellerpagemenu:hover {
+  background-color: #ddd;
+  color: #222;
+}
+
+.sellerpagemenu svg {
+  margin-right: 15px;
+}

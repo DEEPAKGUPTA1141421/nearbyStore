@@ -1,0 +1,162 @@
+.sidebar {
+  background-color: #f0f0f0;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 15%;
+  text-align: center;
+  overflow-y: auto;
+}
+
+.sidebar label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.sidebar input {
+  margin-right: 8px;
+}
+
+.sidebar h3 {
+  margin-bottom: 10px;
+}
+
+.content {
+  margin-left: 220px;
+  padding: 20px;
+  width: 85%;
+}
+.product-page {
+  display: grid;
+  column-gap: 15px;
+  row-gap: 30px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  position: relative;
+  left: 2rem;
+}
+.featuredHeading {
+  text-align: center;
+  font-size: 4rem;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  height: 100%; /* Ensure that the product card takes 100% height */
+}
+
+.product-details {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.product-image > img {
+  height: 15rem;
+  width: 100%;
+  object-fit: cover; /* Maintain aspect ratio for the image */
+}
+
+.product-footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+h2 {
+  text-transform: capitalize;
+}
+
+.desc-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.desc-container p {
+  font-size: 20px;
+}
+
+.cart-wishlist-btns {
+  display: flex;
+  justify-content: space-around;
+  align-items: center; /* Align items vertically in the center */
+  margin-top: auto; /* Push the buttons to the bottom of the card */
+  padding-top: 10px; /* Add some padding to separate buttons from other content */
+}
+
+.cart-wishlist-btns button {
+  background-color: black;
+  color: white; /* Set text color to white */
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+@media screen and (max-width: 1200px) {
+  .product-page {
+    grid-template-columns: 1fr 1fr;
+    left: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .product-page {
+    grid-template-columns: 1fr 1fr;
+    left: 1rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    position: relative;
+    width: 100%;
+    box-shadow: none;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .content {
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .product-footer {
+    display: flex;
+    flex-direction: column;
+    font-size: 3rem;
+    align-items: center;
+  }
+  .product-page {
+    grid-template-columns: 1fr;
+    left: 0.25rem;
+  }
+  .desc-container {
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .product-footer {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    font-size: 3rem;
+    align-items: center;
+  }
+  .product-page {
+    left: 0.1rem;
+  }
+  .desc-container {
+    font-size: 1rem;
+  }
+}

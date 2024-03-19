@@ -1,0 +1,33 @@
+.FaQMain{
+    height:auto;
+    width:50%;
+    padding:5rem 0px;
+}
+.faqupper{
+    height:auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.faqContainerChild{
+    display: flex;
+}
+.fagQuestion{
+    color:black;
+    font-size: 2rem;
+    font-family: 'Courier New', Courier, monospace;
+}
+.faqContainer{
+    padding: 2px 0px;
+}
+.faqHeading{
+    text-align: center;
+}
+.faqicon{
+    size:5px;
+}
+.faqAnswer{
+    margin:2px 0px;
+    font-size: 2rem;
+    color: black;
+}

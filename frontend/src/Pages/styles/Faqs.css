@@ -1,0 +1,36 @@
+.rounded-none {
+    background-color: white;
+  }
+  
+  .border {
+    background-color: white;
+  }
+  
+  .text-neutral-500 {
+    color: black;
+  }
+  
+  .dark:text-neutral-300 {
+    color: black;
+  }
+  
+  .fill-[#336dec] {
+    color: black;
+  }
+  
+  .fill-[#212529] {
+    color: black;
+  }
+  
+  .fill-[#8FAEE0] {
+    color: black;
+  }
+  
+  .fill-[#eee] {
+    color: black;
+  }
+  
+  .dark:fill-[#eee] {
+    color: black;
+  }
+  

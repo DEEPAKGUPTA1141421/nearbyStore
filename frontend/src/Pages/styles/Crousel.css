@@ -1,0 +1,29 @@
+.Carousel {
+    width: 100%;
+  }
+  
+  /* Style for each carousel item */
+  .CarouselItem {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 500px; /* Adjust the height as needed */
+  }
+  
+  /* Style for the image in each carousel item */
+  .CarouselItem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Style for the text container */
+  .CarouselText {
+    position: absolute;
+    left: 20px; /* Adjust the left spacing for the text */
+    max-width: 50%; /* Adjust the maximum width for the text */
+    color: #ffffff; /* Text color */
+    z-index: 1;
+  }
+  
