@@ -84,7 +84,6 @@ const product = mongoose.Schema(
       ref: "Shop",
     },
   },
-  { timestamps: true }
+  { timestamps:true}
 );
-
-module.exports= mongoose.model("Product", product);
+module.exports=mongoose.model("Product", product);
