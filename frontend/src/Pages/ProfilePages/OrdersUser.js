@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/ProfilePage/OrdersUser.css";
 import { useSelector } from "react-redux";
+import { server } from "../../FixedUrl";
 
 const OrdersUser = () => {
   const [orders, setOrders] = useState([]);
@@ -13,7 +14,7 @@ const OrdersUser = () => {
         withCredentials: true
       };
       const { data } = await axios.get(
-        `http://localhost:8000/api/v1/user/getallorders`,axiosConfig
+        `${server}/user/getallorders`,axiosConfig
       );
       setOrders(data.order);
     } catch (err) {

@@ -23,10 +23,13 @@ const Orders = () => {
     fetchData();
   }, []);
   return (
+    <>
     <div>
       {allorder.length > 0 &&
         allorder.map((order) => <SingleOrderList order={order} />)}
     </div>
+    <h1>All Orderds</h1>
+    </>
   );
 };
 
