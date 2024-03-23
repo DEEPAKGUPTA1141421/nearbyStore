@@ -49,13 +49,8 @@ module.exports.paymentVerification = async (req, res, next) => {
       razorpay_signature,
     };
     res.redirect(
-      `http://localhost:3000/paymentsuccess?reference=${razorpay_payment_id}`
+      `/paymentsuccess?reference=${razorpay_payment_id}`
     );
-    // res.status(200).json({
-    //   success: true,
-    //   message: "payment done",
-    //   payment,
-    // });
   } else {
     res.status(400).json({
       success: false,
