@@ -13,7 +13,7 @@ const Products = () => {
   const fetchData = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:8000/api/v1/product/search"
+        `${server}/product/search`
       );
       console.log("data is ", data.products);
 
