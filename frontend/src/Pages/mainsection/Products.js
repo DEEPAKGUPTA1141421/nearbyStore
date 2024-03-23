@@ -5,6 +5,7 @@ import loadingsvg from "../../images/Iphone-spinner-2.gif";
 //import SingleProductCard from './SingleProductCard';
 import "../styles/ProductPage.css";
 import MultiVendorWebsite from "../CategoryHeader";
+import { server } from "../../FixedUrl";
 
 const Products = () => {
   const [products, setProducts] = useState([]);

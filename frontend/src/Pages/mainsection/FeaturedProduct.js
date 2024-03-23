@@ -8,6 +8,7 @@ import "../styles/SingleProduct.css";
 import "../styles/FeaturedProducts.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { server } from "../../FixedUrl.js";
 
 const FeaturedProduct = () => {
   const [products, setProducts] = useState([]);
