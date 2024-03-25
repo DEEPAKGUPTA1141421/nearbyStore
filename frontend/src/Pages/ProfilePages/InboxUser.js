@@ -187,5 +187,4 @@ const InboxUser = () => {
     </>
   );
 };
-
 export default InboxUser;

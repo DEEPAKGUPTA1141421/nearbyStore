@@ -8,6 +8,16 @@ import { GiCancel } from "react-icons/gi";
 import axios from "axios";
 import {toast} from "react-toastify";
 import { server } from "../../FixedUrl";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
+} from '@chakra-ui/react'
 const DeleteConfirmProduct = ({handleDelete,setDeleteProduct,deleteProduct}) => {
     const deleteProdectfromdb=async()=>{
         try{
@@ -41,7 +51,7 @@ const DeleteConfirmProduct = ({handleDelete,setDeleteProduct,deleteProduct}) => 
     }  
   return ReactDOM.createPortal(
     <Fragment>
-      <div className="modalWrapper" onClick={handleDelete}></div>
+      {/* <div className="modalWrapper" onClick={handleDelete}></div>
       <div className="modalContainer">
         <div className="popupcontainer">
         <div className="container">
@@ -52,7 +62,23 @@ const DeleteConfirmProduct = ({handleDelete,setDeleteProduct,deleteProduct}) => 
       </div>
        </div>
         </div>
-      </div>
+      </div> */}
+      <Modal isOpen={handleDelete} onClose={handleDelete}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Are you sure you want to delete?</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={handleDelete}>
+              Close
+            </Button>
+        <Button onClick={cancel} colorScheme="whatsapp" >Cancel Delete</Button>
+        <Button onClick={confirm} colorScheme="red">Confirm Delete</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Fragment>,
     document.getElementById("popuproot") // Target root element
   );

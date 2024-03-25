@@ -26,8 +26,8 @@ const SellerMenu = ({ active, setActive }) => {
     dispatch(logout());
     if (!user.isAuthenticated) {
       setIsAutenticated(false);
+      navigate("/", { replace: true });
       window.location.reload();
-      return;
     } else {
       setIsAutenticated(true);
     }

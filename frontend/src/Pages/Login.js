@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../actions/userAction.js";
 import { toast } from 'react-toastify';
+import { Box, Image, Text, Button, Icon,Heading,Input,Checkbox } from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router-dom';
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,58 +33,59 @@ function Login() {
   };
 
   return (
-    <div className="body">
-      <div className="center-div">
-        <div className="heading">
-          <h2>Login to your account</h2>
-        </div>
-        <div className="content">
-          <div>
-            <label>Email address</label>
-            <br />
-            <input
-              placeholder="Email"
-              type="email"
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <br />
-          </div>
-          <div>
-            <label>Password</label>
-            <br />
-            <input
-              type="password"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
+    <Box style={{ margin: 'auto', width: 'fit-content', textAlign: 'center' }}>
+      <Box>
+        <Heading as="h2">Login to your account</Heading>
+      </Box>
+      <Box>
+        <Box>
+          <label>Email address</label>
+          <br />
+          <Input
+            placeholder="Email"
+            type="email"
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <br />
+        </Box>
+        <Box>
+          <label>Password</label>
+          <br />
+          <Input
+            type="password"
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </Box>
 
-          <div className="options">
-            <div className="checkbox-container">
-              <input type="checkbox" className="checkbox" />
-              <span>Remember me</span>
-            </div>
+        <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem' }}>
+          <Box>
+            <Checkbox />
+            <span style={{ marginLeft: '0.5rem' }}>Remember me</span>
+          </Box>
 
-            <div>
-              <a>Forgot your password?</a>
-            </div>
-          </div>
+          <Box>
+            <Link>Forgot your password?</Link>
+          </Box>
+        </Box>
 
-          <button className="submit-btn" onClick={handleSubmit}>
-            Submit
-          </button>
+        <Button
+          style={{ marginTop: '1rem', backgroundColor: 'blue', color: 'white', padding: '0.5rem 1rem', borderRadius: '0.25rem' }}
+          onClick={handleSubmit}
+        >
+          Submit
+        </Button>
 
-          <p>
-            Not have any account?{" "}
-            <Link to="/sign-up">
-              <span className="sign-up">Sign up</span>
-            </Link>
-          </p>
-        </div>
-      </div>
-    </div>
+        <Box style={{ marginTop: '1rem' }}>
+          Not have any account?{' '}
+          <Link as={RouterLink} to="/sign-up" style={{ color: 'blue' }}>
+            Sign up
+          </Link>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 

@@ -24,9 +24,9 @@ const AdminMenu = ({active,setActive}) => {
   const handlelogout = async () => {
     dispatch(logout());
     if (!user.isAuthenticated) {
-      navigate("/");
-      window.location.reload();
       setIsAutenticated(false);
+      navigate("/", { replace: true });
+      window.location.reload();
     } else {
       setIsAutenticated(true);
     }

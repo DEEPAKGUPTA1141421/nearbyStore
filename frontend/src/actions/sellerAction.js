@@ -1,8 +1,11 @@
 import axios from 'axios';
-import { LOAD_PRODUCT_SELLER_FAIL, LOAD_PRODUCT_SELLER_REQUEST, LOAD_PRODUCT_SELLER_SUCCESS,
+import { 
 LOAD_SHOP_FAIL,
 LOAD_SHOP_REQUEST,
 LOAD_SHOP_SUCCESS,
+LOAD_PRODUCT_SELLER_REQUEST,
+LOAD_PRODUCT_SELLER_FAIL,
+LOAD_PRODUCT_SELLER_SUCCESS
 } from '../constants/userConstant';
 import {
     GET_ALL_SHOP_OF_CITY_REQUEST,
@@ -13,23 +16,30 @@ import { server } from "../FixedUrl";
 import { toast } from "react-toastify";
 export const loadProductOfAShopitem = () => async(dispatch) => {
     try {
-        dispatch({ type: LOAD_PRODUCT_SELLER_REQUEST });
+        dispatch({type:LOAD_PRODUCT_SELLER_REQUEST})
+        console.log("request");
         const axiosConfig = {
             withCredentials: true
         };
         const { data } = await axios.get(`${server}/shop/getAllProduct`, axiosConfig);
+        console.log("data",data);
+        console.log("actual product",data.productToReturn);
         if (data.success) {
+            console.log("success");
             toast.success(data.message);
             dispatch({ type: LOAD_PRODUCT_SELLER_SUCCESS, payload: data.productToReturn, hasProduct: true });
         } else {
+            console.log("failed");
             dispatch({ type: LOAD_PRODUCT_SELLER_FAIL, hasProduct: false });
         }
     } catch(error) {
+        console.log("failed");
         console.log("Error while loading seller products:", error.message);
         toast.error(error.message);
         dispatch({ type: LOAD_PRODUCT_SELLER_FAIL, hasProduct: false });
     }
 }
+
 export const loadShop = () => async(dispatch) => {
     try {
         dispatch({ type: LOAD_SHOP_REQUEST });

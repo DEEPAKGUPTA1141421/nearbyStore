@@ -8,7 +8,7 @@ import { GiCancel } from "react-icons/gi";
 import axios from "axios";
 import {toast} from "react-toastify";
 import { server } from "../../FixedUrl";
-
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Box, Input, Textarea, Button } from "@chakra-ui/react";
 function useFormInitialState() {
     return {
       name: "",
@@ -84,99 +84,103 @@ const UpdateProduct = ({ singleproduct,handleOpen,reRender, setReRender }) => {
   };
   return ReactDOM.createPortal(
     <Fragment>
-      <div className="modalWrapper" onClick={handleOpen}></div>
-      <div className="modalContainer">
-        <div className="popupcontainer">
-        <form className="form-container" onSubmit={handleSubmit}>
-  <div className="form-section">
-    <label>
-      Name:
-      <input
-        type="text"
-        name="name"
-        value={formData.name}
-        onChange={handleChange}
-        required
-      />
-    </label>
-    <label>
-      Description:
-      <textarea
-        name="description"
-        value={formData.description}
-        onChange={handleChange}
-        required
-      />
-    </label>
-    <label>
-      Actual Price:
-      <input
-        type="text"
-        name="actualPrice"
-        value={formData.actualPrice}
-        onChange={handleChange}
-        required
-      />
-    </label>
-    <label>
-      Discount Price:
-      <input
-        type="text"
-        name="discountPrice"
-        value={formData.discountPrice}
-        onChange={handleChange}
-        required
-      />
-    </label>
-    <label>
-      Selling Price:
-      <input
-        type="text"
-        name="sellingPrice"
-        value={formData.sellingPrice}
-        onChange={handleChange}
-        required
-      />
-    </label>
-    <label>
-      Stock:
-      <input
-        type="text"
-        name="stock"
-        value={formData.stock}
-        onChange={handleChange}
-        required
-      />
-    </label>
-  </div>
-
-  <div className="form-section">
-    <label>
-      Category:
-      <input
-        type="text"
-        name="category"
-        value={formData.category}
-        onChange={handleChange}
-        required
-      />
-    </label>
-    <label>
-      Gender specification:
-      <input
-        type="text"
-        name="genderspecific"
-        value={formData.genderspecific}
-        onChange={handleChange}
-        required
-      />
-    </label>
-    <button type="submit" style={{background:"#007bff"}}>Update</button>
-  </div>
-</form>
-
-        </div>
-      </div>
+      <Modal isOpen={handleOpen} onClose={handleOpen} size="xl">
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader />
+        <ModalCloseButton />
+        <ModalBody>
+          <Box as="form" onSubmit={handleSubmit} padding="1rem">
+            <Box as="div" display="flex" justifyContent="space-between">
+              <Box as="div" flex="1" marginRight="1rem">
+                <Box as="label" display="block" marginBottom="1rem">
+                  Name:
+                  <Input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                  />
+                </Box>
+                <Box as="label" display="block" marginBottom="1rem">
+                  Description:
+                  <Textarea
+                    name="description"
+                    value={formData.description}
+                    onChange={handleChange}
+                    required
+                  />
+                </Box>
+                <Box as="label" display="block" marginBottom="1rem">
+                  Actual Price:
+                  <Input
+                    type="text"
+                    name="actualPrice"
+                    value={formData.actualPrice}
+                    onChange={handleChange}
+                    required
+                  />
+                </Box>
+                <Box as="label" display="block" marginBottom="1rem">
+                  Discount Price:
+                  <Input
+                    type="text"
+                    name="discountPrice"
+                    value={formData.discountPrice}
+                    onChange={handleChange}
+                    required
+                  />
+                </Box>
+                <Box as="label" display="block" marginBottom="1rem">
+                  Selling Price:
+                  <Input
+                    type="text"
+                    name="sellingPrice"
+                    value={formData.sellingPrice}
+                    onChange={handleChange}
+                    required
+                  />
+                </Box>
+                <Box as="label" display="block" marginBottom="1rem">
+                  Stock:
+                  <Input
+                    type="text"
+                    name="stock"
+                    value={formData.stock}
+                    onChange={handleChange}
+                    required
+                  />
+                </Box>
+              </Box>
+              <Box as="div" flex="1">
+                <Box as="label" display="block" marginBottom="1rem">
+                  Category:
+                  <Input
+                    type="text"
+                    name="category"
+                    value={formData.category}
+                    onChange={handleChange}
+                    required
+                  />
+                </Box>
+                <Box as="label" display="block" marginBottom="1rem">
+                  Gender specification:
+                  <Input
+                    type="text"
+                    name="genderspecific"
+                    value={formData.genderspecific}
+                    onChange={handleChange}
+                    required
+                  />
+                </Box>
+                <Button type="submit" backgroundColor="#007bff" color="white">Update</Button>
+              </Box>
+            </Box>
+          </Box>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
     </Fragment>,
     document.getElementById("popuproot") // Target root element
   );

@@ -4,6 +4,7 @@ import "../styles/sellerPage/ProDuctPopUp.css";
 import tv from "../../images/Ecommerce.jpg";
 import { TiArrowUpThick } from "react-icons/ti";
 import { FaArrowDown } from "react-icons/fa";
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter,Button, Image, Text, Box } from "@chakra-ui/react";
 import { GiCancel } from "react-icons/gi";
 const ProductPopUp = ({ product, handleOpen }) => {
   const shop = {
@@ -33,62 +34,53 @@ const ProductPopUp = ({ product, handleOpen }) => {
   const addToCart = () => {};
   return ReactDOM.createPortal(
     <Fragment>
-      <div className="modalWrapper" onClick={handleOpen}></div>
-      <div className="modalContainer">
-        <div className="popupcontainer">
-          <div>
-            <div className="croosicon" onClick={handleOpen}><GiCancel /></div>
-            {/* <div>
-              <img className="popupimage" src={tv} alt="productimage" />
-            </div>
-            <div className="ShopInfo">
-              <div><span>Shop Name  </span><span>{shop.name}</span></div>
-              <div><span>Shop City  </span><span>{shop.city}</span></div>
-              <div><span>Shop Onwer  </span><span>{shop.onwer}</span></div>
-            </div> */}
-          {/* </div> */}
-          {/* <div className="footerpop">
-            <p>Description<br/>{product.description}</p>
-            <div>
-              <span>
-                <b>Price: </b>
-                <strike>Rs.{product.actualPrice}</strike> Rs.
-                {product.discountPrice}
-              </span>
-              <span>Rating: {product.singleRating}</span>
-            </div> */}
-            <div className="card">
-      <img src={product.images?product.images[0]:tv} alt="Denim Jeans" style={{ width: '100%',height:"100%" }} />
-      <h1>{product.name}</h1>
-      <p className="price"><span>
-                <b>Price: </b>
-                Rs.{product.sellingPrice} Rs.
-                <strike>{product.actualPrice}</strike>
-              </span></p>
-      <p>
-      {product.description}
-      </p>
-      <p>
-      <div><span>Shop Name  </span><span>{shop.name}</span></div>
-      <div><span>Shop City  </span><span>{shop.city}</span></div>
-      <div><span>Shop Onwer  </span><span>{shop.onwer}</span></div>
-      </p>
-      <p>
-      <div>
-              <button className="addToCartPop" onClick={addToCart}>
-                Add to cart
-              </button>
-            </div>
-            <div className="updownicon">
-              <span onClick={handleIncrease}><TiArrowUpThick /></span>
-              <span>{amount}</span>
-              <span onClick={handleDecrease}><FaArrowDown /></span>
-            </div>
-      </p>
-    </div>
-          </div>
-        </div>
-      </div>
+    <Modal isOpen={handleOpen} onClose={handleOpen} size="xl">
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>
+          <Box as="div" cursor="pointer" onClick={handleOpen} fontSize="2rem" position="absolute" top="0.5rem" right="0.5rem"><GiCancel /></Box>
+        </ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <Box as="div" padding="1rem">
+            <Image src={product.images ? product.images[0] : tv} alt="Product" width="100%" height="auto" />
+            <Text as="h1" fontSize="2xl" marginTop="1rem">{product.name}</Text>
+            <Text as="p" fontSize="lg" marginBottom="1rem">
+              {product.description.length < 100 ? product.description : `${product.description.slice(0, 100)}...`}
+            </Text>
+            <Box as="div" marginBottom="1rem">
+              <Text as="span" fontWeight="bold">Price:</Text>
+              <Text as="span" marginLeft="0.5rem">Rs.{product.sellingPrice} Rs.<strike>{product.actualPrice}</strike></Text>
+            </Box>
+            <Box as="div">
+              <Text as="div">
+                <Text as="span" fontWeight="bold">Shop Name:</Text>
+                <Text as="span" marginLeft="0.5rem">{shop.name}</Text>
+              </Text>
+              <Text as="div">
+                <Text as="span" fontWeight="bold">Shop City:</Text>
+                <Text as="span" marginLeft="0.5rem">{shop.city}</Text>
+              </Text>
+              <Text as="div">
+                <Text as="span" fontWeight="bold">Shop Owner:</Text>
+                <Text as="span" marginLeft="0.5rem">{shop.owner}</Text>
+              </Text>
+            </Box>
+            <Box as="div" marginTop="1rem" marginBottom="1rem">
+              <Button onClick={addToCart}>Add to Cart</Button>
+            </Box>
+            <Box as="div" display="flex" alignItems="center">
+              <Button onClick={handleIncrease} marginRight="0.5rem"><TiArrowUpThick /></Button>
+              <Text>{amount}</Text>
+              <Button onClick={handleDecrease} marginLeft="0.5rem"><FaArrowDown /></Button>
+            </Box>
+          </Box>
+        </ModalBody>
+        <ModalFooter>
+          {/* Add any additional footer elements or buttons here */}
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
     </Fragment>,
     document.getElementById("popuproot") // Target root element
   );

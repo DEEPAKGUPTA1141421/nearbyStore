@@ -37,6 +37,8 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   position: relative;
   left: 2rem;
+  position: relative;
+  top: -250px;
 }
 .featuredHeading {
   text-align: center;

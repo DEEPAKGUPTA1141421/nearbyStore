@@ -11,13 +11,14 @@ import {
 import {Bar,Pie} from "react-chartjs-2";
 import { Line } from "react-chartjs-2";
 import "../styles/sellerPage/Dashboard.css";
-import { loadProductOfAShopitem } from '../../actions/sellerAction';
 import { useDispatch, useSelector } from 'react-redux';
-
 import handm from "../../images/handm.png";
 import UpdateProduct from './UpdateProduct';
 import {toast} from "react-toastify";
 import DeleteConfirmProduct from './DeleteConfirmProduct';
+import { loadProductOfAShopitem, test } from '../../actions/sellerAction';
+import { Button } from '@chakra-ui/react';
+
 ChartJS.register(
   BarElement,
   CategoryScale,
@@ -39,24 +40,18 @@ const Dashboard = () => {
   const[openDelete,setOpenDelete]=useState(false);
   const[deleteProduct,setDeleteProduct]=useState();
   const[mount,setMount]=useState(true);
-  const[data,setData]=useState([]);
+  const[data,setData]=useState(productList);
   const[reRender,setReRender]=useState(false);
   const[open,setOpen]=useState(false);
   const[producttoupdate,setProductToUpdate]=useState(null);
   const dispatch=useDispatch();
   useEffect(()=>{
-    if(mount){
        setIsLoading(true);
-       dispatch(loadProductOfAShopitem());
        generateSalesData();
+       dispatch(loadProductOfAShopitem());
        setIsLoading(false);
        setMount(false);
-    }
-    else{
-      setData(productList);
-      console.log("data check",data);
-    }
-  },[mount,reRender]);
+  },[]);
   const handleOpen=(product)=>{
     const d=open;
     setOpen(!d);
@@ -157,16 +152,17 @@ const Dashboard = () => {
           {data&&data.length>0&&data.map((d) => (
             <tr key={1}>
               <td>
-                <img src={handm} alt="productphoto"/>
+                {d.images.length>0&&<img src={d.images[0]}/>}
+                {d.images.length==0&&<img src={handm} alt="productphoto"/>}
               </td>
               <td>{d.name}</td>
               <td>{d.sellingPrice}</td>
               <td>{d.stock}</td>
               <td>{d.sellingPrice}</td>
-              <td><button onClick={(e)=>{setProductToUpdate(d);
+              <td><Button colorScheme='whatsapp' onClick={(e)=>{setProductToUpdate(d);
               handleOpen();
-              }}>update</button></td>
-              <td><button onClick={(e)=>{handleDelete();setDeleteProduct(d._id);}}>Delete</button></td>
+              }}>update</Button></td>
+              <td><Button colorScheme='red' onClick={(e)=>{handleDelete();setDeleteProduct(d._id);}}>Delete</Button></td>
             </tr>
           ))}
         </tbody>

@@ -30,10 +30,9 @@
      display: none;
      width: fit-content;
      height:ascept-ratio;
-     border:5px solid green;
-      background-color: blueviolet;
+      /* background-color: blueviolet; */
      /* border-bottom-color: aquamarine;
      border-top-color:black ; */
-     border-color:goldenrod ;
+     /* border-color:goldenrod ; */
      /* border-right-color:yellowgreen ; */
   }

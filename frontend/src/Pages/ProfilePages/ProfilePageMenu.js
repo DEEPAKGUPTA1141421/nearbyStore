@@ -21,12 +21,11 @@ const ProfilePageMenu = ({ active, setActive }) => {
   const dispatch=useDispatch();
   const handlelogout = async () => {
     dispatch(logout());
-    if(!user.isAuthenticated){
+    if (!user.isAuthenticated) {
       setIsAutenticated(false);
+      navigate("/", { replace: true });
       window.location.reload();
-      return;
-    }
-    else{
+    } else {
       setIsAutenticated(true);
     }
   };

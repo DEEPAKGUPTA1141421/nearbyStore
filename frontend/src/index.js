@@ -8,14 +8,19 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import { SocketProvider } from "./context/SocketProvider";
+import { ChakraProvider } from '@chakra-ui/react'
 
 ReactDOM.render(
-  <Provider store={store}>
-    <ToastContainer />
-    <SocketProvider>
-      <App />
-    </SocketProvider>
-  </Provider>,
+  <React.StrictMode>
+    <Provider store={store}>
+      <ToastContainer />
+      <SocketProvider>
+        <ChakraProvider>
+          <App />
+        </ChakraProvider>
+      </SocketProvider>
+    </Provider>
+  </React.StrictMode>,
   document.getElementById("root")
 );
 

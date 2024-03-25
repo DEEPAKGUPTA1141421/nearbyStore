@@ -73,11 +73,11 @@ import { LOAD_CART_FAIL,LOAD_CART_REQUEST,LOAD_CART_SUCCESS,
         cartitemqty:newcartitemqty
       }
     }
-    else if(action.type=INCREASE_PRODUCT_COUNT_FAIL||action.type===DECREASE_PRODUCT_COUNT_FAIL){
+    else if (action.type === INCREASE_PRODUCT_COUNT_FAIL || action.type === DECREASE_PRODUCT_COUNT_FAIL) {
       return {
         ...state
       }
-    }
+    }    
     else if (action.type === LOAD_CART_REQUEST) {
       return {
         ...state,

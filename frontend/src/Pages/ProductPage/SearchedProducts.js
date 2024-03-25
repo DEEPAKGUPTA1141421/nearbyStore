@@ -5,7 +5,13 @@ import "../styles/SearchedProduct.css";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import {toast} from "react-toastify";
-
+import {
+  Checkbox,
+  Input,
+  Stack,
+  Box,
+  Button,
+} from "@chakra-ui/react";
 const ProductPage = () => {
   const location = useLocation();
 
@@ -191,83 +197,150 @@ const ProductPage = () => {
   }, [filters.nearestLocationChecked, searchResults, latitude, longitude]);
 
   return (
-    <Fragment>
-      <div className="sidebar">
+//     <Fragment>
+//       <div className="sidebar">
+//         <h3>Filters</h3>
+//         <label>
+//           <input
+//             type="checkbox"
+//             checked={filters.nearestLocationChecked}
+//             onChange={handleInputChange}
+//           />
+//           Nearest location
+//          </label>
+//         <label>
+//           <input
+//             type="checkbox"
+//             checked={filters.latest}
+//             onChange={() => handleCheckboxChange("latest")}
+//           />
+//           Latest
+//         </label>
+//         <label>
+//           <input
+//             type="checkbox"
+//             checked={filters.asc}
+//             onChange={() => handleCheckboxChange("asc")}
+//           />
+//           Ascending
+//         </label>
+//         <label>
+//           <input
+//             type="checkbox"
+//             checked={filters.desc}
+//             onChange={() => handleCheckboxChange("desc")}
+//           />
+//           Descending
+//         </label>
+//         <label>
+//           <input
+//             type="checkbox"
+//             checked={filters.rating}
+//             onChange={() => handleCheckboxChange("rating")}
+//           />
+//           Rating
+//         </label>
+
+//         <label>
+//           From:
+//           <input
+//             type="number"
+//             name="from"
+//             value={filters.from}
+//             onChange={handleInputChange}
+//           />
+//         </label>
+//         <label>
+//           To:
+//           <input
+//             type="number"
+//             name="to"
+//             value={filters.to}
+//             onChange={handleInputChange}
+//           />
+//         </label> 
+//          <button onClick={fetchProducts}>Apply Filters</button> 
+//       </div>
+
+//       <div className="content">
+//       <div className="product-page">
+//   {displayedResults && displayedResults.length === 0 ? (
+//     <h1>No Product in The List</h1>
+//   ) : (
+//     displayedResults.map((product, index) => (
+//       <SingleProductCard product={product} key={index} />
+//     ))
+//   )}
+// </div>
+
+//       </div>
+//     </Fragment>
+<Fragment>
+      <Stack spacing={4} direction="column" className="sidebar">
         <h3>Filters</h3>
-        <label>
-          <input
-            type="checkbox"
-            checked={filters.nearestLocationChecked}
-            onChange={handleInputChange}
-          />
+        <Checkbox
+          checked={filters.nearestLocationChecked}
+          onChange={handleInputChange}
+        >
           Nearest location
-         </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={filters.latest}
-            onChange={() => handleCheckboxChange("latest")}
-          />
+        </Checkbox>
+        <Checkbox
+          checked={filters.latest}
+          onChange={() => handleCheckboxChange("latest")}
+        >
           Latest
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={filters.asc}
-            onChange={() => handleCheckboxChange("asc")}
-          />
+        </Checkbox>
+        <Checkbox
+          checked={filters.asc}
+          onChange={() => handleCheckboxChange("asc")}
+        >
           Ascending
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={filters.desc}
-            onChange={() => handleCheckboxChange("desc")}
-          />
+        </Checkbox>
+        <Checkbox
+          checked={filters.desc}
+          onChange={() => handleCheckboxChange("desc")}
+        >
           Descending
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={filters.rating}
-            onChange={() => handleCheckboxChange("rating")}
-          />
+        </Checkbox>
+        <Checkbox
+          checked={filters.rating}
+          onChange={() => handleCheckboxChange("rating")}
+        >
           Rating
-        </label>
-
-        <label>
-          From:
-          <input
-            type="number"
-            name="from"
-            value={filters.from}
-            onChange={handleInputChange}
-          />
-        </label>
-        <label>
-          To:
-          <input
-            type="number"
-            name="to"
-            value={filters.to}
-            onChange={handleInputChange}
-          />
-        </label> 
-         <button onClick={fetchProducts}>Apply Filters</button> 
-      </div>
-
-      <div className="content">
-      <div className="product-page">
-  {displayedResults && displayedResults.length === 0 ? (
-    <h1>No Product in The List</h1>
-  ) : (
-    displayedResults.map((product, index) => (
-      <SingleProductCard product={product} key={index} />
-    ))
-  )}
-</div>
-
-      </div>
+        </Checkbox>
+        <Box>
+          <label>
+            From:
+            <Input
+              type="number"
+              name="from"
+              value={filters.from}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            To:
+            <Input
+              type="number"
+              name="to"
+              value={filters.to}
+              onChange={handleInputChange}
+            />
+          </label>
+        </Box>
+        <Button onClick={fetchProducts} colorScheme="red">Apply Filters</Button>
+      </Stack>
+      <Box className="content">
+        <div className="product-page">
+          {displayedResults && displayedResults.length === 0 ? (
+            <h1>No Product in The List</h1>
+          ) : (
+            displayedResults.map((product, index) => (
+              <SingleProductCard product={product} key={index} />
+            ))
+          )}
+        </div>
+      </Box>
     </Fragment>
   );
 };

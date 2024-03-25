@@ -13,7 +13,8 @@ import { LOAD_PRODUCT_SELLER_FAIL,LOAD_PRODUCT_SELLER_REQUEST,LOAD_PRODUCT_SELLE
   };
   export const sellerReducer = (state = sellerInitialState, action) => {
     if (action.type === LOAD_PRODUCT_SELLER_SUCCESS){
-      console.log(state);
+      console.log("reducer call",action.type);
+      console.log("product list",state,action);
       return {
         ...state,
         productList: action.payload,
@@ -21,11 +22,15 @@ import { LOAD_PRODUCT_SELLER_FAIL,LOAD_PRODUCT_SELLER_REQUEST,LOAD_PRODUCT_SELLE
       };
     }
     else if(action.type===GET_ALL_SHOP_OF_CITY_REQUEST){
+      console.log("reducer call",action.type);
+      console.log("product list",state,action);
       return {
         ...state
       }
     }
     else if(action.type===GET_ALL_SHOP_OF_CITY_SUCCESS){
+      console.log("reducer call",action.type);
+      console.log("product list",state,action);
       return {
         ...state,
         shoplist:action.payload,
@@ -33,12 +38,16 @@ import { LOAD_PRODUCT_SELLER_FAIL,LOAD_PRODUCT_SELLER_REQUEST,LOAD_PRODUCT_SELLE
       }
     }
     else if(action.type===GET_ALL_SHOP_OF_CITY_FAIL){
+      console.log("reducer call",action.type);
+      console.log("product list",state,action);
       return {
         ...state,
         getallshopofcity:action.getallshopofcity
       }
     }
     else if(action.type===LOAD_SHOP_SUCCESS){
+      console.log("reducer call",action.type);
+      console.log("product list",state,action);
     return {
       ...state,
       loadshop:true,
@@ -46,11 +55,15 @@ import { LOAD_PRODUCT_SELLER_FAIL,LOAD_PRODUCT_SELLER_REQUEST,LOAD_PRODUCT_SELLE
     }
     }
     else if(action.type===LOAD_SHOP_REQUEST){
+      console.log("reducer call",action.type);
+      console.log("product list",state,action);
       return{
         ...state
       }
     }
     else if(action.type===LOAD_SHOP_FAIL){
+      console.log("reducer call",action.type);
+      console.log("product list",state,action);
       return {
         ...state,
         loadshop:false,
@@ -58,11 +71,15 @@ import { LOAD_PRODUCT_SELLER_FAIL,LOAD_PRODUCT_SELLER_REQUEST,LOAD_PRODUCT_SELLE
       }
     }
     else if (action.type === LOAD_PRODUCT_SELLER_REQUEST) {
+      console.log("reducer call",action.type);
+      console.log("product list",state,action);
       return {
         ...state,
         hasProduct:false
       };
     } else if(action.type===LOAD_PRODUCT_SELLER_FAIL){
+      console.log("reducer call",action.type);
+      console.log("product list",state,action);
       return {
         ...state,
         productList:{},
@@ -70,6 +87,8 @@ import { LOAD_PRODUCT_SELLER_FAIL,LOAD_PRODUCT_SELLER_REQUEST,LOAD_PRODUCT_SELLE
       };
     }
     else{
+      console.log("reducer call",action.type);
+      console.log("product list",state,action);
         return {
             ...state
         }

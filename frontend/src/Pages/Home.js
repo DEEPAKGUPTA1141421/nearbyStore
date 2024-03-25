@@ -15,12 +15,16 @@ import { server } from "../FixedUrl";
 import FeaturedProduct from "./mainsection/FeaturedProduct";
 import Sponsered from "./mainsection/Sponsered";
 import NavbarMenu from "./NavbarMenu";
-import Crousel from "./mainsection/Crousel";
 import { useDispatch, useSelector } from "react-redux";
 import { loaduser } from "../actions/userAction";
 import CityShop from "./mainsection/CityShop";
+import {Button} from '@chakra-ui/react';
+import Crousel from "./mainsection/Crousel";
+import { Menu, MenuButton, MenuList, MenuItem} from "@chakra-ui/react";
+import { categoriesData } from "./StaticData";
 const Home = () => {
   const [searchText, setSearchText] = useState("");
+  const[dropdownmenu,setdropdownmenu]=useState(false);
   const { user } = useSelector((state) => state.userreducer);
   const[role,setRole]=useState();
   console.log("role",role);
@@ -103,6 +107,7 @@ const Home = () => {
         </div>
         <div className="secondclass">
           <div className="searchbox" ref={searchInputRef}>
+            <Button>
             <input
               type="text"
               className="search-input"
@@ -110,8 +115,9 @@ const Home = () => {
               value={searchText}
               placeholder="Search..."
             />
+            </Button>
             <button onClick={submitSearch} className="search-btn">
-              <span>Search</span>
+              <Button><span>Search</span></Button>
             </button>
             {searchText && (
               <div className="result-container">
@@ -119,7 +125,8 @@ const Home = () => {
                   <Link to={`/product/${result._id}`}>
                     <div key={result.id} className="search-result-div">
                       <img
-                        src="https://www.parivarceremony.com/media/catalog/product/cache/62408a38a401bb86dbe3ed2f017b539f/p/2/p2167sr06.jpg"
+                        // src="https://www.parivarceremony.com/media/catalog/product/cache/62408a38a401bb86dbe3ed2f017b539f/p/2/p2167sr06.jpg"
+                        src={result.images[0]}
                         className="search-result-image"
                       />
                       {result.name}
@@ -134,11 +141,11 @@ const Home = () => {
     user &&  // Check if role is falsy (i.e., undefined or null)
     <React.Fragment> {/* or <></> for short */}
       {role!=="seller"&&<button className="become-seller-btn" onClick={handlebecomeseller}>
-        Become Seller
+        <Button>Become Seller</Button>
       </button>}
       {
         role!=="rider"&&<button className="become-seller-btn" onClick={handlebecomerider}>
-        Become Rider
+        <Button>Become Rider</Button>
       </button>
       }
     </React.Fragment>
@@ -150,7 +157,18 @@ const Home = () => {
       {/* <NavbarMenu active={active} setActive={setActive}/> */}
       <div className="navbar2">
         <div className="allpages">
-          <p>All Categories</p>
+            <Menu>
+      <MenuButton as={Button} colorScheme="red">
+        All Category
+      </MenuButton>
+      <MenuList>
+        {categoriesData&&categoriesData.length>0&&
+        categoriesData.map((d,index)=>
+        <MenuItem>{d.label}</MenuItem>
+        )
+        }
+      </MenuList>
+    </Menu>
         </div>
         <div className="allpages">
           <p></p>
@@ -220,7 +238,7 @@ const Home = () => {
       </div>
       {active === 1 && (
         <>
-          <Crousel />
+         <Crousel/>
           <Sponsered />
           <FeaturedProduct />
           <BestSelling />
