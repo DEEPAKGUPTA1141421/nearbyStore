@@ -10,6 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {toast} from "react-toastify";
 import { server } from "../../FixedUrl";
 const ProductDetails = () => {
+  const[availableImage,setAvailableImage]=useState(undefined);
   const[colorImages,setColorImages]=useState([
       "https://www.parivarceremony.com/media/catalog/product/cache/62408a38a401bb86dbe3ed2f017b539f/p/2/p2167sr06.jpg",
       "https://assets.shopkund.com/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/a/c/acu8056-1-printed-weaving-silk-saree-in-pink-sr23494.jpg",
@@ -119,6 +120,7 @@ const ProductDetails = () => {
       setCountry(productDetails.shopId.country);
       setOwnerName(productDetails.shopId.ownername);
       setContact(productDetails.shopId.contact);
+      setAvailableImage(productDetails.images[0]);
       if(productDetails.images){
         setColorImages(productDetails.images);
       }
@@ -170,7 +172,8 @@ const ProductDetails = () => {
       <div className="container">
         <div className="images">
           <div className="images-container">
-            <img src={mainImage} alt="Product Image" />
+            {availableImage===undefined&&<img src={mainImage} alt="Product Image" />}
+            {availableImage!==undefined&&<img src={availableImage} alt="Product Image" />}
           </div>
           <div className="color-options-container">
             {colorImages.map((color, index) => (
