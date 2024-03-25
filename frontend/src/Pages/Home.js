@@ -18,7 +18,7 @@ import NavbarMenu from "./NavbarMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { loaduser } from "../actions/userAction";
 import CityShop from "./mainsection/CityShop";
-import {Button} from '@chakra-ui/react';
+import {Button, Input} from '@chakra-ui/react';
 import Crousel from "./mainsection/Crousel";
 import { Menu, MenuButton, MenuList, MenuItem} from "@chakra-ui/react";
 import { categoriesData } from "./StaticData";
@@ -107,15 +107,14 @@ const Home = () => {
         </div>
         <div className="secondclass">
           <div className="searchbox" ref={searchInputRef}>
-            <Button>
-            <input
+            
+            <Input
               type="text"
               className="search-input"
               onChange={handleSearchChange}
               value={searchText}
               placeholder="Search..."
             />
-            </Button>
             <button onClick={submitSearch} className="search-btn">
               <Button><span>Search</span></Button>
             </button>
