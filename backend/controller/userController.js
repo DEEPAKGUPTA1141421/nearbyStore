@@ -7,7 +7,7 @@ const Track = require("../models/tracking");
 
 const sendToken = async (user, statusCode, message, res) => {
   const token = user.getToken();
-  console.log("hello");
+  console.log("hello",token);
   // options for cookies
   //const COOKIES_EXPIRES=Number
   console.log("token",token);
@@ -46,16 +46,42 @@ module.exports.test=async(req,res,next)=>{
     })
 }
 module.exports.createuserfornow=async(req,res,next)=>{
-  try{
-    const user=await User.create(req.body);
-    res.status(200).json({
-      message:"user created",
-      success:true,
-      user:user
-    })
-  }
-  catch(err){
-    next(new customError(err.message,404));
+  try {
+    console.log("inside");
+    // Extract fields from the request body
+    const { fullname, email, password, image, role } = req.body;
+    const { country, city, address1, address2, postalCode, addressType } = req.body;
+
+    // Parse address field as an object
+    const address = {
+      country,
+      city,
+      address1,
+      address2,
+      postalCode,
+      addressType
+    };
+
+    // Create a new user document using the UserModel
+    console.log("2");
+    const user = await User.create({
+      fullname,
+      email,
+      password,
+      image,
+      address, 
+    });
+
+    if (user) {
+      // If user is created successfully, send token
+      sendToken(user, 201, "User Created Successfully", res);
+    } else {
+      // If user creation failed (unlikely with unique email constraint), throw an error
+      next(new customError("Email Already Exists", 404));
+    }
+  } catch (err) {
+    // Handle any errors that occur during user creation
+    next(new customError(err.message, 404));
   }
 }
 module.exports.signup = async (req, res, next) => {

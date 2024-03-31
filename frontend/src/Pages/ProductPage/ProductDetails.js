@@ -9,13 +9,16 @@ import { FaMessage } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
 import {toast} from "react-toastify";
 import { server } from "../../FixedUrl";
+import Loader from 'react-loader-spinner';
 const ProductDetails = () => {
   const[availableImage,setAvailableImage]=useState(undefined);
-  const[colorImages,setColorImages]=useState([
-      "https://www.parivarceremony.com/media/catalog/product/cache/62408a38a401bb86dbe3ed2f017b539f/p/2/p2167sr06.jpg",
-      "https://assets.shopkund.com/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/a/c/acu8056-1-printed-weaving-silk-saree-in-pink-sr23494.jpg",
-      "https://assets.shopkund.com/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/a/c/acu8057-1-silk-saree-with-printed-weaving-in-green-sr23495.jpg",
-  ]);
+  const[loading,setLoading]=useState(false);
+  // const[colorImages,setColorImages]=useState([
+  //     "https://www.parivarceremony.com/media/catalog/product/cache/62408a38a401bb86dbe3ed2f017b539f/p/2/p2167sr06.jpg",
+  //     "https://assets.shopkund.com/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/a/c/acu8056-1-printed-weaving-silk-saree-in-pink-sr23494.jpg",
+  //     "https://assets.shopkund.com/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/a/c/acu8057-1-silk-saree-with-printed-weaving-in-green-sr23495.jpg",
+  // ]);
+  const[colorImages,setColorImages]=useState([]);
   const { productid } = useParams();
   console.log(productid);
   const { user } = useSelector((state) => state.userreducer);
@@ -91,6 +94,7 @@ const ProductDetails = () => {
   // }, []);
   const changeMainImage = (newImage) => {
     setMainImage(newImage);
+    setAvailableImage(newImage);
   };
 
   const handleRatingChange = (rating) => {
@@ -161,115 +165,121 @@ const ProductDetails = () => {
     }
   };
   useEffect(() => {
+    setLoading(true);
     fetchData();
+    setLoading(false);
   }, []);
   return (
     <>
-      <div style={{ position: "relative" }}>
-        <MultiVendorWebsite />
-      </div>
-
-      <div className="container">
-        <div className="images">
-          <div className="images-container">
-            {availableImage===undefined&&<img src={mainImage} alt="Product Image" />}
-            {availableImage!==undefined&&<img src={availableImage} alt="Product Image" />}
+      {loading ? (
+       <h1>Loading</h1>
+      ) : (
+        <>
+          <div style={{ position: "relative" }}>
+            <MultiVendorWebsite />
           </div>
-          <div className="color-options-container">
-            {colorImages.map((color, index) => (
-              <div className="color-images">
-                <img
-                  key={index}
-                  src={color}
-                  alt={`Color Option ${index + 1}`}
-                  onClick={() => changeMainImage(color)}
-                />
+  
+          <div className="container">
+            <div className="images">
+              <div className="images-container">
+                {availableImage === undefined && <img src={mainImage} alt="Product Image" />}
+                {availableImage !== undefined && <img src={availableImage} alt="Product Image" />}
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="details-container">
-          <div className="product-title">{product.name}</div>
-          <div className="product-description">{product.description}</div>
-          <div className="price">
-            <strike className="actualPrice">Rs. {product.actualPrice}</strike>
-            <span className="discountPrice">Rs. {product.discountPrice}</span>
-          </div>
-
-          <div className="quantity-button">
-            <button className="quantity-btn" onClick={handleDecrease}>
-              -
-            </button>
-            <span className="quantity-display">{quantity}</span>
-            <button className="quantity-btn" onClick={handleIncrease}>
-              +
-            </button>
-          </div>
-
-          <button className="add-to-cart-btn">
-            <span onClick={addToCart}>Add to Cart</span> <FaShoppingCart />
-          </button>
-          <button className="add-to-cart-btn" onClick={handleMessageSeller}>
-          <span>Message Seller</span>
-  <FaMessage />
-
-          </button>
-        </div>
-      </div>
-
-      <div className="product-reviews">
-        <h2>Product Reviews</h2>
-        {reviews.length > 0
-          ? reviews.map((review, index) => (
-              <div key={index} className="review-item">
-                <p>{review.comment}</p>
-                <p>Rating: {review.rating}</p>
+              <div className="color-options-container">
+                {colorImages.map((color, index) => (
+                  <div className="color-images" key={index}>
+                    <img
+                      src={color}
+                      alt={`Color Option ${index + 1}`}
+                      onClick={() => changeMainImage(color)}
+                    />
+                  </div>
+                ))}
               </div>
-            ))
-          : "No reviews yet !!"}
-      </div>
-
-      <div className="add-review-form">
-        <h2>Add a Review</h2>
-        <textarea
-          placeholder="Write your review..."
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-        />
-
-        <button onClick={handleSubmit}>Submit Review</button>
-      </div>
-
-      <div className="add-rating-form">
-        <h2>Rate the product</h2>
-        {/* <label>Rating: </label> */}
-        {/* <input type="number" onChange={(e) => setRating(e.target.value)} /> */}
-        <ReactStars
-          count={5}
-          onChange={handleRatingChange}
-          size={24}
-          isHalf={true}
-          emptyIcon={<i className="far fa-star"></i>}
-          halfIcon={<i className="fa fa-star-half-alt"></i>}
-          fullIcon={<i className="fa fa-star"></i>}
-          activeColor="#ffd700"
-        />
-        <button onClick={handleSubmitRating}>Submit Rating</button>
-      </div>
-
-      <div className="seller-info">
-        <p>{email}</p>
-        <p>{ownerName}</p>
-        <p>{contact}</p>
-        <p>
-          {city}
-          {state}
-          {country}
-        </p>
-      </div>
+            </div>
+  
+            <div className="details-container">
+              <div className="product-title">{product.name}</div>
+              <div className="product-description">{product.description}</div>
+              <div className="price">
+                <strike className="actualPrice">Rs. {product.actualPrice}</strike>
+                <span className="discountPrice">Rs. {product.discountPrice}</span>
+              </div>
+  
+              <div className="quantity-button">
+                <button className="quantity-btn" onClick={handleDecrease}>
+                  -
+                </button>
+                <span className="quantity-display">{quantity}</span>
+                <button className="quantity-btn" onClick={handleIncrease}>
+                  +
+                </button>
+              </div>
+  
+              <button className="add-to-cart-btn" onClick={addToCart}>
+                <span>Add to Cart</span> <FaShoppingCart />
+              </button>
+              <button className="add-to-cart-btn" onClick={handleMessageSeller}>
+                <span>Message Seller</span>
+                <FaMessage />
+              </button>
+            </div>
+          </div>
+  
+          <div className="product-reviews">
+            <h2>Product Reviews</h2>
+            {reviews.length > 0 ? (
+              reviews.map((review, index) => (
+                <div key={index} className="review-item">
+                  <p>{review.comment}</p>
+                  <p>Rating: {review.rating}</p>
+                </div>
+              ))
+            ) : (
+              "No reviews yet !!"
+            )}
+          </div>
+  
+          <div className="add-review-form">
+            <h2>Add a Review</h2>
+            <textarea
+              placeholder="Write your review..."
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
+  
+            <button onClick={handleSubmit}>Submit Review</button>
+          </div>
+  
+          <div className="add-rating-form">
+            <h2>Rate the product</h2>
+            <ReactStars
+              count={5}
+              onChange={handleRatingChange}
+              size={24}
+              isHalf={true}
+              emptyIcon={<i className="far fa-star"></i>}
+              halfIcon={<i className="fa fa-star-half-alt"></i>}
+              fullIcon={<i className="fa fa-star"></i>}
+              activeColor="#ffd700"
+            />
+            <button onClick={handleSubmitRating}>Submit Rating</button>
+          </div>
+  
+          <div className="seller-info">
+            <p>{email}</p>
+            <p>{ownerName}</p>
+            <p>{contact}</p>
+            <p>
+              {city}
+              {state}
+              {country}
+            </p>
+          </div>
+        </>
+      )}
     </>
-  );
+  );  
 };
 
 export default ProductDetails;

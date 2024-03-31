@@ -2,20 +2,27 @@ import React from "react";
 import { AiFillFacebook, AiFillInstagram, AiFillYoutube, AiOutlineTwitter } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import "./styles/Footer.css"; // Import your custom CSS file
-
+import { Box, Button, Input, Text } from '@chakra-ui/react'
+import { Typography } from "@material-tailwind/react";
 const Footer = () => {
   return (
     <div className="footer-container">
       <div className="subscribe-section">
         <h1>Subscribe us for news, events, and offers</h1>
         <div className="subscribe-input">
-          <input type="text" required placeholder="Enter your email..." />
-          <button>Submit</button>
+          <Input type="email" required placeholder="Enter your email..." />
+          <Button>Submit</Button>
         </div>
       </div>
       <div className="footer-links-container">
         <ul className="logo-section">
-          <p>The home and elements needed to create beautiful products.</p>
+          <Box>
+          <Typography colorScheme="whatsapp">Empower Your Business: Join Our Thriving Multivendor Marketplace Today!</Typography>
+          <Typography colorScheme="whatsapp">Discover Limitless Opportunities: Expand Your Reach with Our Multivendor Platform</Typography>
+          <Typography colorScheme="whatsapp">Unleash Your Potential: Showcase Your Products on Our Multivendor Ecommerce Hub.</Typography>
+          <Typography colorScheme="whatsapp">Elevate Your Sales: Partner with Us to Access a Diverse Audience of Shoppers.</Typography>
+          <Typography colorScheme="whatsapp">Transform Your Business: Harness the Power of Collaboration on Our Multivendor Marketplace.</Typography>
+          </Box>
           <div className="social-icons">
             <AiFillFacebook size={25} />
             <AiOutlineTwitter size={25} />

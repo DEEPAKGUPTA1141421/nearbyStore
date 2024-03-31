@@ -9,6 +9,7 @@ import "../styles/FeaturedProducts.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { server } from "../../FixedUrl.js";
+import { Heading } from "@chakra-ui/react";
 
 const FeaturedProduct = () => {
   const [products, setProducts] = useState([]);
@@ -91,7 +92,8 @@ const FeaturedProduct = () => {
 
   return (
     <Fragment>
-      <p className="featuredHeading">Featured Products</p>
+      {/* <p className="featuredHeading">Featured Products</p> */}
+      <Heading className="featuredHeading" textAlign="center" textColor="green">Featured Products</Heading>
       {loading ? (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150"></svg>
       ) : (

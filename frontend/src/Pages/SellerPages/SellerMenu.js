@@ -23,8 +23,8 @@ const SellerMenu = ({ active, setActive }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handlelogout = async () => {
-    dispatch(logout());
-    if (!user.isAuthenticated) {
+    await dispatch(logout());
+    if (!user.isAuthenticated){
       setIsAutenticated(false);
       navigate("/", { replace: true });
       window.location.reload();

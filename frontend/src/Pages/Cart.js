@@ -110,7 +110,7 @@ const CartPage = () => {
           <div key={product.productId._id} className="cart-item">
             <div className="product-image">
               <img
-                src="https://images.app.goo.gl/jiKPdHCF2SqR1hm17"
+                src={product.productId.images[0]}
                 alt={product.productId.name}
               />
             </div>

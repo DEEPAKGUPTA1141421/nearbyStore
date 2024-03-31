@@ -83,15 +83,17 @@ export const logout = () => async(dispatch) =>{
             withCredentials: true, // Store cookies
             // ContentType: 'application/data' // Handle application/data responses
           };
-          console.log("3");
+        console.log("logout");
         const {data} = await axios.delete(`${server}/user/logout`,axiosConfig);
         console.log("hello",data);
         console.log("4");
         if(data.success){
-            console.log("5");
+            console.log("logout succesfully");
+            toast.success("logout succesfully");
             dispatch({type:LOGOUT_USER_SUCCESS,user:{}});
         }
         else{
+            toast.error("logout fail");
             console.log("6");
             console.log("unsuccessfull");
             dispatch({type:LOGOUT_USER_FAIL});

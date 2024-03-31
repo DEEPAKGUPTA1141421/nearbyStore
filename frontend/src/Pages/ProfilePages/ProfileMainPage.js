@@ -17,6 +17,7 @@ const ProfileMainPage = () => {
           {active === 1 && <Profile />}
           {active === 2 && <Orders />}
           {active === 3 && <Inbox />}
+          {active==4&&<>LogOut</>}
         </div>
       </div>
     </Fragment>

@@ -20,7 +20,8 @@ const ProfilePageMenu = ({ active, setActive }) => {
   const navigate = useNavigate();
   const dispatch=useDispatch();
   const handlelogout = async () => {
-    dispatch(logout());
+    setActive(4)
+    await dispatch(logout());
     if (!user.isAuthenticated) {
       setIsAutenticated(false);
       navigate("/", { replace: true });

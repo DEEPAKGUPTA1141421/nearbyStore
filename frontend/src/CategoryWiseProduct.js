@@ -6,6 +6,7 @@ import SingleProductCard from "./Pages/ProductPage/SingleProductCard";
 import { useParams } from "react-router-dom";
 import MultiVendorWebsite from "./Pages/CategoryHeader";
 import { server } from "./FixedUrl";
+import { Heading } from "@chakra-ui/react";
 
 const CategoryWiseProduct = () => {
   const [products, setProducts] = useState([]);
@@ -17,7 +18,7 @@ const CategoryWiseProduct = () => {
     try {
       const {data} = await axios.get(`${server}/product/search`, {
       params: {
-        category: currCategory
+        category: currCategory 
       }
     });
       console.log("data",data);
@@ -40,9 +41,9 @@ const CategoryWiseProduct = () => {
 
   return (
     <Fragment>
-      {products&&products.length==0&&<h1 style={{textAlign:"center",color:"red",position:"relative",top:"50%"}}>No Product Of This Category</h1>}
+      {products&&products.length==0&&<h1 style={{textAlign:"center",color:"red",position:"relative",top:"50%"}}> Sorry No Product Of The Category {currCategory}</h1>}
         <div>
-          {products&&products.length>0&&<h1 className="productpageHeading">All Products</h1>}
+          {products&&products.length>0&&<Heading color="GrayText" textAlign="center">All Products For {currCategory}</Heading>}
           <div className="product-page">
             {products&&products.length>0&&products.map((product, index) => (
               <SingleProductCard product={product} key={index} />

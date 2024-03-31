@@ -18,7 +18,7 @@ import NavbarMenu from "./NavbarMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { loaduser } from "../actions/userAction";
 import CityShop from "./mainsection/CityShop";
-import {Button, Input} from '@chakra-ui/react';
+import {Button, Input, Text} from '@chakra-ui/react';
 import Crousel from "./mainsection/Crousel";
 import { Menu, MenuButton, MenuList, MenuItem} from "@chakra-ui/react";
 import { categoriesData } from "./StaticData";
@@ -177,7 +177,7 @@ const Home = () => {
           <p>Home</p>
         </div>
         <div onClick={(e) => setActive(2)} className="allpages">
-          <p>City Wise Shop</p>
+          <p>Search Shop</p>
         </div>
         <div onClick={(e) => setActive(3)} className="allpages">
           <p>Products</p>
@@ -230,8 +230,8 @@ const Home = () => {
           </div>
         ) : (
           <div className="login-signup">
-            <Link to="/sign-up">Sign up</Link>
-            <Link to="/login">Login</Link>
+            <Link to="/sign-up"><Text>Sign up</Text></Link>
+            <Link to="/login"><Text>Login</Text></Link>
           </div>
         )}
       </div>

@@ -8,7 +8,7 @@ import "../styles/Crousel.css";
 
 const Crousel = () => {
   return (
-    <Carousel className="rounded-xl">
+    <Carousel className="rounded-xl ">
       <div className="relative h-full w-full">
         <img
           // src={jewellary}

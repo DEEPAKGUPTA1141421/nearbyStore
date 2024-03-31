@@ -22,7 +22,7 @@ const AdminMenu = ({active,setActive}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handlelogout = async () => {
-    dispatch(logout());
+    await dispatch(logout());
     if (!user.isAuthenticated) {
       setIsAutenticated(false);
       navigate("/", { replace: true });

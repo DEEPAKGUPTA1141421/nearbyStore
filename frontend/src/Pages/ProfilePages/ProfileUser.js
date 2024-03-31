@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import "../styles/ProfilePage/ProfileUser.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
-
+import { Button } from "@chakra-ui/react";
+import { server } from "../../FixedUrl";
 const ProfileUser = () => {
   const{user}=useSelector((state)=>state.userreducer);
   console.log("user",user);
@@ -20,7 +21,7 @@ const ProfileUser = () => {
     try {
       console.log("checkid",user._id);
       const { data } = await axios.get(
-        `http://localhost:8000/api/v1/user/get/${user._id}`
+        `${server}/user/get/${user._id}`
       );
 
       if (data.success) {
@@ -61,7 +62,7 @@ const ProfileUser = () => {
       formData.append("address2", userData.address2);
 
       const { data } = await axios.put(
-        `http://localhost:8000/api/v1/user/update/${user._id}`,
+        `${server}/user/update/${user._id}`,
         formData
       );
 
@@ -130,7 +131,7 @@ const ProfileUser = () => {
             onChange={handleChange}
           />
 
-          <button onClick={handleSubmit}>Update</button>
+          <Button colorScheme="whatsapp" onClick={handleSubmit}>Update</Button>
           {updated && <i>User updated successfully!!</i>}
         </div>
       </div>

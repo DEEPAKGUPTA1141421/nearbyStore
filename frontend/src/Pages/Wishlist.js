@@ -92,7 +92,7 @@ const Wishlist = () => {
                 <div key={product.productId._id} className="wishlist-item">
                   <div className="product-image">
                     <img
-                      src="https://assets.shopkund.com/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/a/c/acu8056-1-printed-weaving-silk-saree-in-pink-sr23494.jpg"
+                      src={product.productId.images[0]}
                       alt={product.productId.name}
                     />
                   </div>

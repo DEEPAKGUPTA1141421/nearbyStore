@@ -46,12 +46,17 @@ const Dashboard = () => {
   const[producttoupdate,setProductToUpdate]=useState(null);
   const dispatch=useDispatch();
   useEffect(()=>{
-       setIsLoading(true);
-       generateSalesData();
-       dispatch(loadProductOfAShopitem());
-       setIsLoading(false);
-       setMount(false);
-  },[]);
+      if(mount==true){
+        dispatch(loadProductOfAShopitem());
+        setMount(false);
+        setReRender(!reRender);
+      }
+       else{
+        setIsLoading(true);
+        generateSalesData();
+        setIsLoading(false);
+       }
+  },[dispatch,setMount,mount,reRender]);
   const handleOpen=(product)=>{
     const d=open;
     setOpen(!d);
@@ -80,7 +85,7 @@ const Dashboard = () => {
    };
   const formatDate = (date) => {
     const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    return formattedDate.slice(0, 5); // Take the first 5 characters of the formatted date
+    return formattedDate.slice(0, 5);
    };
    const handleproductDelete=()=>{
     if(deleteProduct==undefined){
