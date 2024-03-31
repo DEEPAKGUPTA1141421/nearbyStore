@@ -22,6 +22,7 @@ import {Button, Input, Text} from '@chakra-ui/react';
 import Crousel from "./mainsection/Crousel";
 import { Menu, MenuButton, MenuList, MenuItem} from "@chakra-ui/react";
 import { categoriesData } from "./StaticData";
+import { loadProductOfAShopitem } from "../actions/sellerAction";
 const Home = () => {
   const [searchText, setSearchText] = useState("");
   const[dropdownmenu,setdropdownmenu]=useState(false);
@@ -93,6 +94,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(loaduser());
+    dispatch(loadProductOfAShopitem());
   }, [dispatch]);
   useEffect(() => {
     if(user) {

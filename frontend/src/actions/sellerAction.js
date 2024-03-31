@@ -26,7 +26,6 @@ export const loadProductOfAShopitem = () => async(dispatch) => {
         console.log("actual product",data.productToReturn);
         if (data.success) {
             console.log("success");
-            toast.success(data.message);
             dispatch({ type: LOAD_PRODUCT_SELLER_SUCCESS, payload: data.productToReturn, hasProduct: true });
         } else {
             console.log("failed");

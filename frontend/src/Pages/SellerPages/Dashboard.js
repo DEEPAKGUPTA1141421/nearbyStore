@@ -46,17 +46,8 @@ const Dashboard = () => {
   const[producttoupdate,setProductToUpdate]=useState(null);
   const dispatch=useDispatch();
   useEffect(()=>{
-      if(mount==true){
-        dispatch(loadProductOfAShopitem());
-        setMount(false);
-        setReRender(!reRender);
-      }
-       else{
-        setIsLoading(true);
-        generateSalesData();
-        setIsLoading(false);
-       }
-  },[dispatch,setMount,mount,reRender]);
+      generateSalesData();
+  },[]);
   const handleOpen=(product)=>{
     const d=open;
     setOpen(!d);
