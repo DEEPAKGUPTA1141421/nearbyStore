@@ -93,7 +93,7 @@ const MultiVendorWebsite = () => {
             {categoriesData.length > 0 &&
               categoriesData.map((data, index) => (
                 <Menu key={index}>
-                  <MenuButton as={Button} colorScheme="yellow" className="selected">
+                  <MenuButton as={Button} colorScheme="red" className="selected" style={{marginLeft:"10px"}}>
                     {data.label}
                   </MenuButton>
                   <MenuList>

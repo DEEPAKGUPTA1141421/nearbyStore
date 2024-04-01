@@ -20,7 +20,8 @@ const {
   removeItemFromWishlist,
   removeItemFromCart,
   logout,
-  clearCart
+  clearCart,
+  cartToWishlist
 } = require("../controller/userController");
 const { isAuthenticated } =require("../middleware/authorised");
 const router = express.Router();
@@ -47,12 +48,12 @@ router.delete("/removefromcart/:id",isAuthenticated, removeItemFromCart);
 router.post("/wishlist/:user/:id", addToWishlist);
 // wishlist to cart
 router.post("/wishlistToCart/:user/:id", wishlistToCart);
+router.get("/cartToWishlist/:id",isAuthenticated,cartToWishlist);
 router.delete("/removefromwishlist/:user/:id", removeItemFromWishlist);
 // add comment
 router.post("/addcomment/:id", addComment);
 router.get("/wishlistItems/:id",wishlistItems);
 router.get("/createotp/:id", createOtp);
-
 // processing - picked by rider - delivered by rider - completed
 
 module.exports = router;

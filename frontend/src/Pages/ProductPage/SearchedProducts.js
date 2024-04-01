@@ -12,6 +12,8 @@ import {
   Box,
   Button,
 } from "@chakra-ui/react";
+import { server } from "../../FixedUrl";
+import BackIcon from "../../BackIcon";
 const ProductPage = () => {
   const location = useLocation();
 
@@ -36,7 +38,7 @@ const ProductPage = () => {
     
     try {
       const { data } = await axios.get(
-        `http://localhost:8000/api/v1/product/search`,
+        `${server}/product/search`,
         {
           params: {
             searchTerm: searchText,
@@ -331,7 +333,7 @@ const ProductPage = () => {
         <Button onClick={fetchProducts} colorScheme="red">Apply Filters</Button>
       </Stack>
       <Box className="content">
-        <div className="product-page">
+        <div className="searched-product-page">
           {displayedResults && displayedResults.length === 0 ? (
             <h1>No Product in The List</h1>
           ) : (

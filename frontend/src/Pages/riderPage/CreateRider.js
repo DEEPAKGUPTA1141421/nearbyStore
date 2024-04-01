@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {toast} from "react-toastify";
 import { createRider } from "../../actions/riderActions";
+import BackIcon from "../../BackIcon";
 const CreateRider = ({ active, setActive }) => {
     const dispatch=useDispatch();
     const[imageUrl,SetImageUrl]=useState("");
@@ -76,6 +77,7 @@ const CreateRider = ({ active, setActive }) => {
     }
   return (
     <>
+    <BackIcon/>
       <div className="body">
         <div className="center-div">
           <div className="heading">

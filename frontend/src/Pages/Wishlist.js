@@ -5,6 +5,8 @@ import { FaTrash, FaHeart, FaShoppingCart } from "react-icons/fa";
 import "./styles/Wishlist.css";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import BackIcon from "../BackIcon";
+import { Heading } from "@chakra-ui/react";
 const Wishlist = () => {
   const [wishlistItems, setwishlistItems] = useState([]);
   const [isMounted, setIsMounted] = useState(false);
@@ -79,13 +81,14 @@ const Wishlist = () => {
 
   return (
     <>
+    <BackIcon/>
       {isMounted && (
         <div className="main-container">
           <div className="wishlist-heading">
-            <b>Wishlist</b>
+            <Heading textAlign="center">Wishlist</Heading>
           </div>
           <div className="wishlist-page">
-            {wishlistItems.length==0&&<h1>No Product  In The WishList</h1>}
+            {wishlistItems.length==0&&<Heading style={{margin:"0px auto"}} color="green">No Product  In The WishList</Heading>}
             {wishlistItems &&
               wishlistItems.length > 0 &&
               wishlistItems.map((product) => (

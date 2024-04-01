@@ -49,6 +49,16 @@
   position: relative;
   top:-15rem;
 }
+.searched-product-page{
+  display: grid;
+  column-gap: 15px;
+  row-gap: 30px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  position: relative;
+  left: 2rem;
+  position: relative;
+  top:-15rem;
+}
 .featuredHeading {
   text-align: center;
   font-size: 4rem;

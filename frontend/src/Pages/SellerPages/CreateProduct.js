@@ -4,6 +4,7 @@ import "../styles/sellerPage/CreateProduct.css";
 import axios from "axios";
 import { server } from "../../FixedUrl";
 import {toast} from "react-toastify";
+import BackIcon from "../../BackIcon";
 function useFormInitialState() {
   return {
     name: "",
@@ -92,6 +93,7 @@ function CreateProduct() {
   };
   return (
     <div className="create-product-container">
+      <BackIcon/>
       <h1>Product Details</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-div">

@@ -6,6 +6,7 @@ import { login } from "../actions/userAction.js";
 import { toast } from 'react-toastify';
 import { Box, Image, Text, Button, Icon,Heading,Input,Checkbox } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
+import BackIcon from "../BackIcon.js";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,6 +34,8 @@ function Login() {
   };
 
   return (
+    <>
+    <BackIcon/>
     <Box style={{ margin: 'auto', width: 'fit-content', textAlign: 'center' }}>
       <Box>
         <Heading as="h2">Login to your account</Heading>
@@ -86,6 +89,7 @@ function Login() {
         </Box>
       </Box>
     </Box>
+    </>
   );
 }
 

@@ -4,6 +4,7 @@ import PaymentSection from "./PaymentSection";
 import SuccessSection from "./SuccessSection";
 import "../styles/Order/PlaceOrder.css";
 import { useSelector } from "react-redux";
+import { Button } from "@chakra-ui/react";
 
 const OrderPage = () => {
   const [activeSection, setActiveSection] = useState("address");
@@ -16,36 +17,39 @@ const OrderPage = () => {
   return (
     <div>
       <div className="header">
-        <h1>Header</h1>
+        <h1>Place Order And Get Coins</h1>
       </div>
       <div className="container">
         <div className="process">
           <div className="step">
-            <button
-              onClick={() => handleSectionChange("address")}
+            <Button
+              colorScheme={activeSection==="payment"||activeSection==="success"?"whatsapp":"red"}
+              // onClick={() => handleSectionChange("address")}
               className={activeSection === "address" ? "active" : ""}
             >
               Address
-            </button>
+            </Button>
           </div>
           <div className="lines"></div>
           <div className="step">
-            <button
-              onClick={() => handleSectionChange("payment")}
+            <Button
+              colorScheme={activeSection==="payment"?"red":(activeSection==="success"?"whatsapp":"gray")}
+              // onClick={() => handleSectionChange("payment")}
               className={activeSection === "payment" ? "active" : ""}
             >
               Payment
-            </button>
+            </Button>
           </div>
           <div className="lines"></div>
           <div className="step">
-            <button
+            <Button
               className="order-process-btn"
-              onClick={() => handleSectionChange("success")}
+              colorScheme={activeSection==="success"?"red":"gray"}
+              // onClick={() => handleSectionChange("success")}
               // className={activeSection === "success" ? "active" : ""}
             >
               Success
-            </button>
+            </Button>
           </div>
         </div>
 

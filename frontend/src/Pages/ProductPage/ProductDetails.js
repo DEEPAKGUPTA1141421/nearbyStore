@@ -10,6 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {toast} from "react-toastify";
 import { server } from "../../FixedUrl";
 import Loader from 'react-loader-spinner';
+import BackIcon from "../../BackIcon";
 const ProductDetails = () => {
   const[availableImage,setAvailableImage]=useState(undefined);
   const[loading,setLoading]=useState(false);
@@ -176,9 +177,7 @@ const ProductDetails = () => {
       ) : (
         <>
           <div style={{ position: "relative" }}>
-            <MultiVendorWebsite />
           </div>
-  
           <div className="container">
             <div className="images">
               <div className="images-container">

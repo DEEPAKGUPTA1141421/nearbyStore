@@ -4,12 +4,15 @@ import "../styles/Order/Shipping.css";
 import axios from 'axios';
 import { server } from '../../FixedUrl';
 import { toast } from 'react-toastify';
+import { Button } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 const PaymentSection = () => {
   const{user}=useSelector((state)=>state.userreducer);
   const[subtotal,setSubTotal]=useState(0);
   const[shippingcharge,setShippingCharge]=useState(0);
   const[discount,setDiscount]=useState(0);
   const[total,setTotal]=useState(0);
+  const navigate=useNavigate();
   const{cartitem,cartitemqty}=useSelector((state)=>state.cartreducer);
   const calcuateData = () => {
     let newShippingCharge = 0;
@@ -28,8 +31,71 @@ const PaymentSection = () => {
     setSubTotal(newSubTotal);
     setTotal(newSubTotal - newDiscount + newShippingCharge);
   }
-  const handleCashOnDeliveryPayment=()=>{
+  const handleCashOnDeliveryPayment=async()=>{
+    toast.success("Thanks for cash on Delivery");
+    const formdata=new FormData();
+    formdata.append("amount",total);
+    try {
+        const axiosConfig = {
+            withCredentials: true
+        };
+        const formdataorder = new FormData();
+        console.log("2",JSON.parse(localStorage.getItem("shippingInfo")).address);
+        // formdataorder.append("shippingInfo",JSON.stringify(localStorage.getItem("shippingInfo")));
+        formdataorder.append("address",JSON.parse(localStorage.getItem("shippingInfo")).address);
+        formdataorder.append("city",JSON.parse(localStorage.getItem("shippingInfo")).city);
+        formdataorder.append("state",JSON.parse(localStorage.getItem("shippingInfo")).state);
+        formdataorder.append("country",JSON.parse(localStorage.getItem("shippingInfo")).country);
+        formdataorder.append("contactNumber",JSON.parse(localStorage.getItem("shippingInfo")).contactNumber);
 
+        let orderItemsobj = [];
+        for (let i = 0; i < cartitem.length; i++) {
+            const item = cartitem[i];
+            let obj = {};
+            obj.name = item.productId.description;
+            obj.price = item.productId.sellingPrice;
+            obj.Quantity = 1;
+            obj.image = item.productId.images;
+            obj.product = item.productId._id;
+            orderItemsobj.push(obj);
+        }
+        console.log("3");
+        console.log("finalcheck", orderItemsobj);
+        const paymentobj = {"id": "cashondelivery"};
+        formdataorder.append("orderItems",JSON.stringify(orderItemsobj));
+        formdataorder.append("paymentInfo", JSON.stringify(paymentobj));
+        formdataorder.append("itemsPrice", subtotal);
+        formdataorder.append("taxPrice", 0);
+        formdataorder.append("shippingPrice", shippingcharge);
+        formdataorder.append("totalPrice", total);
+        formdataorder.append("orderStatus","processing");
+        console.log("4");
+        console.log("5",subtotal,shippingcharge,);
+        const { data } = await axios.post(`${server}/order/create`, formdataorder, axiosConfig);
+      
+        // Handle response
+        console.log("Response check by deepak:", data);
+        if (data.success) {
+            console.log("6");
+            const { data: clearCartData } = await axios.get(`${server}/user/clearcart`, axiosConfig);
+            console.log("clearCartData",clearCartData);
+            if (clearCartData.success) {
+                toast.success("Cart cleared successfully.");
+                setTimeout(()=>{
+                  navigate(`${server}/payment/paymentVerification`);
+                 },5000);
+            } else {
+                toast.error("Failed to clear cart.");
+            }
+        } else {
+            console.log("7");
+            toast.error("Failed to create order.");
+        }
+    } catch (error) {
+        console.log("8");
+        console.error("Error:", error);
+        toast.error("Error creating order.");
+    }
   }
   const handleOnlinePayment=async()=>{
     toast.success("inside");
@@ -85,13 +151,12 @@ const PaymentSection = () => {
         console.log("Response check by deepak:", data);
         if (data.success) {
             console.log("6");
-            // const { data: clearCartData } = await axios.get(`${server}/user/clearcart`, axiosConfig);
-            // if (clearCartData.success) {
-            //     toast.success("Cart cleared successfully.");
-            //     // navigate("/");
-            // } else {
-            //     toast.error("Failed to clear cart.");
-            // }
+            const { data: clearCartData } = await axios.get(`${server}/user/clearcart`, axiosConfig);
+            if (clearCartData.success) {
+                toast.success("Cart cleared successfully.");
+            } else {
+                toast.error("Failed to clear cart.");
+            }
         } else {
             console.log("7");
             toast.error("Failed to create order.");
@@ -136,7 +201,7 @@ const PaymentSection = () => {
   },[total]);
   return (
     <>
-    <div className="total">
+    <div className="total" style={{position:"relative",top:"-240px",left:"-100px"}}>
           <div className="order-summary">
             <h2>Order Summary</h2>
             <div className="summary-item">
@@ -157,10 +222,10 @@ const PaymentSection = () => {
               <span>₹{total}</span>
             </div>
             <div className="apply">
-               <button onClick={handleOnlinePayment}>Pay Now</button>
+               <Button colorScheme='whatsapp' onClick={handleOnlinePayment}>Pay Now</Button>
              </div>
              <div >
-              <button onClick={handleCashOnDeliveryPayment}>Cash On Delivery</button>
+              <Button colorScheme='red' onClick={handleCashOnDeliveryPayment}>Cash On Delivery</Button>
              </div>
             {/* <div className="coupon">
               <input onChange={(e)=>setCoupon(e.target.value)}  className="coupon-code" placeholder="Coupon Code" />

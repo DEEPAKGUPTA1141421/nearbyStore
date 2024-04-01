@@ -353,7 +353,32 @@ module.exports.wishlistToCart = async (req, res, next) => {
     next(new customError("Unable to move item from wishlist to cart", 400));
   }
 };
+module.exports.cartToWishlist = async (req, res, next) => {
+  let id = req.params.id;
+  let userId = req.user._id;
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      next(new customError("User not found", 400));
+    } else {
+      const cartlist = user.cart.filter(
+        (item) => item.productId.toString() != id
+      );
+      console.log(cartlist);
+      user.cart = cartlist;
+      user.wishlist.push({ productId: id });
+      await user.save();
 
+      res.status(200).json({
+        success: true,
+        message: "Item moved from  cart to wishlist",
+        user,
+      });
+    }
+  } catch (err) {
+    next(new customError("Unable to move item from wishlist to cart", 400));
+  }
+};
 module.exports.createOtp = async (req, res, next) => {
   const id = req.params.id;
   try {

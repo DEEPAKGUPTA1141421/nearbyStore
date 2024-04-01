@@ -344,6 +344,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { server } from "../../FixedUrl";
+import BackIcon from "../../BackIcon";
 const Becomeseller = () => {
    const {isAuthenticated,user}=useSelector((state)=>state.userreducer);
   const[image,setImage]=useState("");
@@ -475,6 +476,8 @@ formdatacurr.append("imagefshop", imageUrl); // Assuming imageUrl is the URL for
   })
 
   return (
+    <>
+    <BackIcon/>
     <Flex direction="column" align="center" justify="center" minH="100vh">
       <Flex direction="column" maxW="500px" p="4">
         <Heading as="h2" mb="4">
@@ -567,6 +570,7 @@ formdatacurr.append("imagefshop", imageUrl); // Assuming imageUrl is the URL for
         </FormControl>
       </Flex>
     </Flex>
+    </>
   );
 };
 export default Becomeseller;

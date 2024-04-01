@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./styles/Cart.css";
 import { decreasecount, increasecount, loadcartitem, setcartitem } from "../actions/cartAction";
 import { toast } from "react-toastify";
+import BackIcon from "../BackIcon";
 const CartPage = () => {
   const [cart, setCart] = useState([]);
   const [quantities, setQuantities] = useState({});
@@ -75,9 +76,9 @@ const CartPage = () => {
       withCredentials: true
     };
     try {
-      const { data } = await axios.post(
+      const { data } = await axios.get(
         `${server}/user/cartToWishlist/${productId}`,axiosConfig);
-      console.log("data",data);
+      console.log("data checkingggg",data);
       if (data.success) {
         toast.error(data.message);
         setCart((prevCart) =>
@@ -105,6 +106,7 @@ const CartPage = () => {
 
   return (
     <div className="main-container">
+      <BackIcon/>
       <div className="cart-page">
         {cart&&cart.length>0&&cart.map((product) => (
           <div key={product.productId._id} className="cart-item">

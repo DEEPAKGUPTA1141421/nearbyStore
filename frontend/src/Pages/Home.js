@@ -32,7 +32,6 @@ const Home = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
-
   const [active, setActive] = useState(1);
   const navigate = useNavigate();
   const searchInputRef = useRef(null);
@@ -111,6 +110,7 @@ const Home = () => {
           <div className="searchbox" ref={searchInputRef}>
             
             <Input
+              color="white"
               type="text"
               className="search-input"
               onChange={handleSearchChange}

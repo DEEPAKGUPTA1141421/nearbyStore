@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { discountarray } from "../StaticData";
 import { toast } from 'react-toastify';
 import { json } from "react-router-dom";
+import { Button } from "@chakra-ui/react";
 const ShippingSection = ({handleSectionChange}) => {
   const{user}=useSelector((state)=>state.userreducer);
   console.log("user shipping info",user);
@@ -20,7 +21,7 @@ const ShippingSection = ({handleSectionChange}) => {
     contactNumber: "",
     country: "india",
     address: "",
-    email:"",
+    email:user.email,
     postalCode: "",
     city: "",
     state: ""
@@ -103,7 +104,7 @@ const ShippingSection = ({handleSectionChange}) => {
   return (
     <div>
       <div className="container2">
-        <div className="formData">
+        <div className="formData" style={{position:"relative",top:"-250px"}}>
         <form>
             <div className="form-column">
               <label htmlFor="fullName">Full Name</label>
@@ -153,7 +154,8 @@ const ShippingSection = ({handleSectionChange}) => {
                 type="email"
                 id="email"
                 name="email"
-                value={formData.email}
+                value={user.email}
+                readOnly
                 onChange={handleChange}
                 required
               />
@@ -190,7 +192,7 @@ const ShippingSection = ({handleSectionChange}) => {
           </form>
         </div>
 
-        <div className="total">
+        <div className="total" style={{position:"relative",top:"-250px"}}>
           <div className="order-summary">
             <h2>Order Summary</h2>
             <div className="summary-item">
@@ -219,7 +221,7 @@ const ShippingSection = ({handleSectionChange}) => {
               <button className="apply-code-btn" onClick={handleCouponDiscount}>Apply Code</button>
             </div> */}
             <div>
-              <button onClick={() => goToPayment()}>Go To Payment</button>
+              <Button  colorScheme="whatsapp" onClick={() => goToPayment()}>Go To Payment</Button>
             </div>
           </div>
         </div>

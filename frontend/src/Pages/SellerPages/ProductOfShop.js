@@ -1,5 +1,6 @@
 import { Badge, Box, Image } from '@chakra-ui/react'
 import React from 'react'
+import BackIcon from '../../BackIcon'
 
 const ProductOfShop = ({product}) => {
     const property = {
@@ -13,6 +14,8 @@ const ProductOfShop = ({product}) => {
         rating: 4,
       }
   return (
+    <>
+    <BackIcon/>
     <Box  maxW='sm' maxH='lg' borderWidth='1px' borderRadius='lg' overflow='hidden'>
         <Image src={product.images[0]} alt={property.imageAlt}  style={{width: "100%",height: "50%"}}/>
   
@@ -69,6 +72,7 @@ const ProductOfShop = ({product}) => {
           </Box>
         </Box>
       </Box>
+    </>
   )
 }
 

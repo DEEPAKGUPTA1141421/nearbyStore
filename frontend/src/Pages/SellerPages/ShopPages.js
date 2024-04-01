@@ -14,6 +14,7 @@ import {
   Stack,
   Box
 } from "@chakra-ui/react";
+import BackIcon from "../../BackIcon";
 const ShopPages = () => {
   const [filters, setFilters] = useState({
     from: "",
