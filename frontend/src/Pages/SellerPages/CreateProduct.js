@@ -93,7 +93,6 @@ function CreateProduct() {
   };
   return (
     <div className="create-product-container">
-      <BackIcon/>
       <h1>Product Details</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-div">
@@ -211,7 +210,7 @@ function CreateProduct() {
             </label>
           </div>
           <div>
-            <h1>Multiple Image Upload to Cloudinary</h1>
+            <h1>Upload Product Image</h1>
             <input
               type="file"
               multiple

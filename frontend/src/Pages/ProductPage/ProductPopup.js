@@ -6,7 +6,34 @@ import { TiArrowUpThick } from "react-icons/ti";
 import { FaArrowDown } from "react-icons/fa";
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter,Button, Image, Text, Box } from "@chakra-ui/react";
 import { GiCancel } from "react-icons/gi";
+import axios from "axios";
+import { server } from "../../FixedUrl";
+import { RxEyeOpen } from "react-icons/rx";
+import {toast} from "react-toastify";
+import { useSelector } from "react-redux";
+import { FaShoppingCart, FaHeart } from "react-icons/fa";
 const ProductPopUp = ({ product, handleOpen }) => {
+  const { user } = useSelector((state) => state.userreducer);
+  const [addedToCart, setaddedToCart] = useState(false);
+  const [wishlist, setwishlist] = useState(false);
+
+  const addToCart = async () => {
+    const productId = product._id;
+
+    try {
+      const { data } = await axios.post(
+        `${server}/user/cart/${user._id}/${productId}`
+      );
+      console.log(data);
+      if (data.success) {
+        setaddedToCart(true);
+      } else {
+        toast.error("Item already in cart");
+      }
+    } catch (err){
+      console.log(err);
+    }
+  };
   const shop = {
     name: "Galaxy Shop",
     city: "delhi",
@@ -17,6 +44,24 @@ const ProductPopUp = ({ product, handleOpen }) => {
   const handleIncrease = () => {
     if (amount <= product.stock) {
       setAmount(amount + 1);
+    }
+  };
+  const wishList = async () => {
+    const userId = user._id;
+    const productId = product._id;
+
+    try {
+      const { data } = await axios.post(
+        `${server}/user/wishlist/${userId}/${productId}`
+      );
+      console.log(data);
+      if (data.success) {
+        setwishlist(true);
+      } else {
+        toast.error("Item already in wishlist");
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
   const handleDecrease = () => {
@@ -31,7 +76,6 @@ const ProductPopUp = ({ product, handleOpen }) => {
       document.body.style.overflow = "scroll"; // Re-enable scrolling when component is unmounted
     };
   }, []);
-  const addToCart = () => {};
   return ReactDOM.createPortal(
     <Fragment>
     <Modal isOpen={handleOpen} onClose={handleOpen} size="xl">
@@ -67,7 +111,18 @@ const ProductPopUp = ({ product, handleOpen }) => {
               </Text>
             </Box>
             <Box as="div" marginTop="1rem" marginBottom="1rem">
-              <Button onClick={addToCart}>Add to Cart</Button>
+            <div>
+              <Button colorScheme="red" onClick={addToCart}>
+                {addedToCart ? "Added " : "Add to cart "}&nbsp;
+                <FaShoppingCart />
+              </Button>
+            </div>
+            <div>
+              <Button colorScheme="red" onClick={wishList} style={{marginTop:"10px"}}>
+                {wishlist ? "Wishlisted " : "Add to wishlist "}&nbsp;
+                <FaHeart />
+              </Button>
+            </div>
             </Box>
             <Box as="div" display="flex" alignItems="center">
               <Button onClick={handleIncrease} marginRight="0.5rem"><TiArrowUpThick /></Button>

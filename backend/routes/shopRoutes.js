@@ -9,13 +9,14 @@ const {
   bestshop,
   getAllShopOfCity,
   getAllProductForUser,
+  gettopshop,
 } = require("../controller/shopController");
 const { isAuthenticated } = require("../middleware/authorised");
 const router = express.Router();
 
 router.post("/create",isAuthenticated, createShop);
 router.get("/get",isAuthenticated, getshopInfo);
-
+router.get('/gettopshop',gettopshop);
 router.put("/updateshop/:id", updateShopInfo);
 // get all products
 router.get("/getAllProduct",isAuthenticated, getAllProduct);

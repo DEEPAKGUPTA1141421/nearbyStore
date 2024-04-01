@@ -9,6 +9,24 @@ const customResponse = (message, success, res) => {
     message: message,
   });
 };
+module.exports.gettopshop=async(req,res,next)=>{
+  try{
+    const shop=await Shop.find({}).limit(5);
+    if(!shop){
+      next(new customError("shop not found",404));
+    }
+    else{
+      res.status(200).json({
+        success:true,
+        message:"get top shop",
+        shop:shop
+      })
+    }
+  }
+  catch(err){
+    next(new customError("shop not found",404));
+  }
+}
 
 module.exports.createShop = async (req, res, next) => {
   let data = req.body;

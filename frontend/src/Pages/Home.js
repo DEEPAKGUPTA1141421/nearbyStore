@@ -18,31 +18,43 @@ import NavbarMenu from "./NavbarMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { loaduser } from "../actions/userAction";
 import CityShop from "./mainsection/CityShop";
-import {Button, Input, Text} from '@chakra-ui/react';
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Heading,
+  Input,
+  Text,
+} from "@chakra-ui/react";
 import Crousel from "./mainsection/Crousel";
-import { Menu, MenuButton, MenuList, MenuItem} from "@chakra-ui/react";
+import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import { categoriesData } from "./StaticData";
 import { loadProductOfAShopitem } from "../actions/sellerAction";
+import { GiButterToast } from "react-icons/gi";
 const Home = () => {
   const [searchText, setSearchText] = useState("");
-  const[dropdownmenu,setdropdownmenu]=useState(false);
+  const[currentIndex,setCurrentIndex]=useState(0);
+  const [dropdownmenu, setdropdownmenu] = useState(false);
   const { user } = useSelector((state) => state.userreducer);
-  const[role,setRole]=useState();
-  console.log("role",role);
+  const [role, setRole] = useState();
+  console.log("role", role);
   const [isMounted, setIsMounted] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [active, setActive] = useState(1);
+   const [shop, setShop] = useState([]);
   const navigate = useNavigate();
   const searchInputRef = useRef(null);
   const dispatch = useDispatch();
 
-  const handlebecomeseller =(e) => {
+  const handlebecomeseller = (e) => {
     navigate("/becomeSeller");
   };
-  const handlebecomerider=(e)=>{
+  const handlebecomerider = (e) => {
     navigate("/becomeRider");
-  }
+  };
   const handleShopNow = async (e) => {
     navigate("/productPage");
   };
@@ -96,10 +108,29 @@ const Home = () => {
     dispatch(loadProductOfAShopitem());
   }, [dispatch]);
   useEffect(() => {
-    if(user) {
+    if (user) {
       setRole(user.role);
     }
   });
+  const nextshop=()=>{
+    if(currentIndex==4){
+      setCurrentIndex(0);
+      return;
+    }
+    let d=currentIndex+1%5;
+    setCurrentIndex(d);
+  }
+  const fetchShop = async () => {
+    try {
+      const { data } = await axios.get(`${server}/shop/gettopshop`);
+      setShop(data.shop);
+    } catch (err) {
+      console.log("err", err);
+    }
+  };
+  useEffect(() =>{
+    fetchShop();
+  }, []);
   return (
     <Fragment>
       <div className="navbar">
@@ -108,7 +139,6 @@ const Home = () => {
         </div>
         <div className="secondclass">
           <div className="searchbox" ref={searchInputRef}>
-            
             <Input
               color="white"
               type="text"
@@ -118,7 +148,9 @@ const Home = () => {
               placeholder="Search..."
             />
             <button onClick={submitSearch} className="search-btn">
-              <Button><span>Search</span></Button>
+              <Button>
+                <span>Search</span>
+              </Button>
             </button>
             {searchText && (
               <div className="result-container">
@@ -138,19 +170,28 @@ const Home = () => {
             )}
           </div>
           <div className="becomeseller">
-          {
-    user &&  // Check if role is falsy (i.e., undefined or null)
-    <React.Fragment> {/* or <></> for short */}
-      {role!=="seller"&&<button className="become-seller-btn" onClick={handlebecomeseller}>
-        <Button>Become Seller</Button>
-      </button>}
-      {
-        role!=="rider"&&<button className="become-seller-btn" onClick={handlebecomerider}>
-        <Button>Become Rider</Button>
-      </button>
-      }
-    </React.Fragment>
-  }
+            {user && ( // Check if role is falsy (i.e., undefined or null)
+              <React.Fragment>
+                {" "}
+                {/* or <></> for short */}
+                {role !== "seller" && (
+                  <button
+                    className="become-seller-btn"
+                    onClick={handlebecomeseller}
+                  >
+                    <Button>Become Seller</Button>
+                  </button>
+                )}
+                {role !== "rider" && (
+                  <button
+                    className="become-seller-btn"
+                    onClick={handlebecomerider}
+                  >
+                    <Button>Become Rider</Button>
+                  </button>
+                )}
+              </React.Fragment>
+            )}
           </div>
           <div></div>
         </div>
@@ -158,18 +199,18 @@ const Home = () => {
       {/* <NavbarMenu active={active} setActive={setActive}/> */}
       <div className="navbar2">
         <div className="allpages">
-            <Menu>
-      <MenuButton as={Button} colorScheme="red">
-        All Category
-      </MenuButton>
-      <MenuList>
-        {categoriesData&&categoriesData.length>0&&
-        categoriesData.map((d,index)=>
-        <MenuItem>{d.label}</MenuItem>
-        )
-        }
-      </MenuList>
-    </Menu>
+          <Menu>
+            <MenuButton as={Button} colorScheme="red">
+              All Category
+            </MenuButton>
+            <MenuList>
+              {categoriesData &&
+                categoriesData.length > 0 &&
+                categoriesData.map((d, index) => (
+                  <MenuItem>{d.label}</MenuItem>
+                ))}
+            </MenuList>
+          </Menu>
         </div>
         <div className="allpages">
           <p></p>
@@ -198,26 +239,26 @@ const Home = () => {
         {user ? (
           <div className="cart-wish-profile">
             <div>
-              {
-                role!=undefined&&role==="user"&&<Link to="/userprofile" className="options">
-                <CgProfile />
-              </Link>
-              }
-              {
-                role!=undefined&&role==="seller"&&<Link to="/mainsellerpage" className="options">
-                <CgProfile />
-              </Link>
-              }
-              {
-                role!=undefined&&role==="rider"&&<Link to="/rider" className="options">
-                <CgProfile />
-              </Link>
-              }
-              {
-                role!=undefined&&role==="admin"&&<Link to="/admin" className="options">
-                <CgProfile />
-              </Link>
-              }
+              {role != undefined && role === "user" && (
+                <Link to="/userprofile" className="options">
+                  <CgProfile />
+                </Link>
+              )}
+              {role != undefined && role === "seller" && (
+                <Link to="/mainsellerpage" className="options">
+                  <CgProfile />
+                </Link>
+              )}
+              {role != undefined && role === "rider" && (
+                <Link to="/rider" className="options">
+                  <CgProfile />
+                </Link>
+              )}
+              {role != undefined && role === "admin" && (
+                <Link to="/admin" className="options">
+                  <CgProfile />
+                </Link>
+              )}
             </div>
             <div>
               <Link to="/cart" className="options">
@@ -232,18 +273,61 @@ const Home = () => {
           </div>
         ) : (
           <div className="login-signup">
-            <Link to="/sign-up"><Text>Sign up</Text></Link>
-            <Link to="/login"><Text>Login</Text></Link>
+            <Link to="/sign-up">
+              <Text>Sign up</Text>
+            </Link>
+            <Link to="/login">
+              <Text>Login</Text>
+            </Link>
           </div>
         )}
       </div>
       {active === 1 && (
         <>
-         <Crousel/>
+          {shop &&
+            shop.length > 0 &&
+            shop.map((s, index) => (
+              <>
+                <Card
+                  align="center"
+                  style={{
+                    position: "absolute",
+                    top: "350px",
+                    zIndex: "20",
+                    left: "130px",
+                    display: currentIndex === index ? "block" : "none"
+                  }}
+                >
+                  <Button colorScheme="red" onClick={nextshop}>Go To Next Shop</Button>
+                  <CardHeader>
+                    <Heading
+                      size="md"
+                      style={{ position: "relative", bottom: "20px" }}
+                    >
+                      Trending Store
+                    </Heading>
+                    <Heading size="xl">Visit {s.shopname}</Heading>
+                    <Button colorScheme="gray">Shop Location     {s.location}</Button>
+                    <Button colorScheme="red" style={{position:"relative",top:"10px"}}>Shop Category     {s.category}</Button>
+                  </CardHeader>
+                  <CardBody>
+                    <Text>
+                      Visit {s.shopname} to Explore Varoius  Project 
+                    </Text>
+                  </CardBody>
+                  <CardFooter>
+                  <Link to={`/shoppage/${s._id}`}><Button colorScheme="blue">View Store</Button></Link>
+                  </CardFooter>
+                </Card>
+              </>
+            ))}
+          <Crousel />
           <Sponsered />
           <FeaturedProduct />
           <BestSelling />
-          <div style={{position:"relative",top:"5rem"}}><Footer /></div>
+          <div style={{ position: "relative", top: "5rem" }}>
+            <Footer />
+          </div>
         </>
       )}
       {active === 2 && <CityShop />}

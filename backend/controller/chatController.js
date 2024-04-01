@@ -50,7 +50,7 @@ module.exports.accesschat=async(req,res,next)=>{
 module.exports.fetchchat=async(req,res,next)=>{
     try {
         const userId=req.user._id;
-        const chats = await Chat.find({ users: { $elemMatch: { $eq: userId } } })
+        const chats = await Chat.find({ users: { $elemMatch: { $eq: userId } } }).populate('users')
         .populate("latestMessage")
         .sort({ updatedAt: -1 })
         .exec();

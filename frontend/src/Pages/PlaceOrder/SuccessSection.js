@@ -6,6 +6,7 @@ import { loadcartitem } from '../../actions/cartAction';
 import { server } from '../../FixedUrl';
 import {toast} from "react-toastify";
 import axios from 'axios';
+import { Button } from '@chakra-ui/react';
 const SuccessSection = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -128,7 +129,7 @@ const handlehome=()=>{
   //   <p>Reference: {reference}</p>
   // </div>
   <>
-  <button onClick={handlehome}>backToHome</button>
+  <Button onClick={handlehome}>backToHome</Button>
   <div className="w-screen flex items-center justify-center h-screen bg-gray-200"
   style={{
     backgroundImage: "url('https://cdn1.vectorstock.com/i/1000x1000/70/70/payment-successful-website-landing-page-vector-26627070.jpg')",

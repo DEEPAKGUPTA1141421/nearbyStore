@@ -153,7 +153,7 @@ const InboxUser = () => {
         {chats&&chats.length>0&&chats.map((chat,index) => (
           <div key={index} className={`chat-item ${selelctedchat===chat._id ? 'selected-chat' : ''}`} onClick={(e)=>handleSeleted(chat._id)}>
             <div className="chat-info">
-              <div className="chat-name">{chat.chatName}</div>
+              <div className="chat-name">{chat.users[0].fullname}</div>
               <div className="chat-message">{chat.latestMessage?chat.latestMessage.content:"No Latest Message Till Now"}</div>
             </div>
             <div className="chat-time">{chat.updatedAt}</div>
