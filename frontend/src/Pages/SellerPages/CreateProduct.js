@@ -5,6 +5,7 @@ import axios from "axios";
 import { server } from "../../FixedUrl";
 import {toast} from "react-toastify";
 import BackIcon from "../../BackIcon";
+import { Button } from "@chakra-ui/react";
 function useFormInitialState() {
   return {
     name: "",
@@ -35,6 +36,7 @@ function CreateProduct() {
       return;
     }
     const temparr=[];
+    let flag=false;
     for(let i=0;i<images.length;i++){
       const formdata=new FormData();
       formdata.append("file",images[i]);
@@ -42,14 +44,18 @@ function CreateProduct() {
       formdata.append("cloud_name",'drt8pxy1q');
       const {data}=await axios.post("https://api.cloudinary.com/v1_1/drt8pxy1q/image/upload",formdata);
       console.log(data.secure_url);
+      flag=data.success;
       temparr.push(data.secure_url);
     }
     SetImageUrlArray(temparr);
     console.log(imageurlArray);
+    return flag;
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("image check".imageurlArray);
+    console.log("inside");
+    console.log("image check",imageurlArray);
+    if(uploadImage()){
     const formdata = new FormData();
     // Append form data
     for (const key in formData) {
@@ -77,11 +83,16 @@ function CreateProduct() {
           category: "",
           genderspecific: "Neutral",
         });
+        SetImageUrlArray([]);
       }
     } catch (err) {
       toast.error(err.message);
       console.log(err);
     }
+  }
+  else{
+    toast.error("product creation failed");
+  }
   };
 
   const handleChange = (e) => {
@@ -218,7 +229,7 @@ function CreateProduct() {
               accept="image/*"
               required
             />
-            <button onClick={uploadImage}>click to Upload Image or Drag </button>
+            <Button onClick={uploadImage}>click to Upload Image or Drag </Button>
             <div>
               {images &&
                 images.length > 0 &&

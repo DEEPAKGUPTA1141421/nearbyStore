@@ -11,6 +11,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/userAction";
+import { Button } from "@chakra-ui/react";
 
 const ProfilePageMenu = ({ active, setActive }) => {
   const {user}=useSelector((state)=>state.userreducer);
@@ -39,22 +40,29 @@ const ProfilePageMenu = ({ active, setActive }) => {
     <Fragment>
       <div className="user">
         <div onClick={(e) => setActive(1)} className="profilepagemenu">
+          <Button>
           <FaUser />
-          Profile
+          <Button>Profile</Button>
+          </Button>
         </div>
 
         <div onClick={(e) => setActive(2)} className="profilepagemenu">
+          <Button>
           <FaShoppingCart />
-          Orders
+          <Button>Orders</Button>
+          </Button>
         </div>
 
         <div onClick={(e) => setActive(3)} className="profilepagemenu">
-          <FaInbox />
-          Inbox
+          <Button><FaInbox />
+          <Button>Inbox</Button>
+          </Button>
         </div>
         <div className="profilepagemenu" onClick={handlelogout}>
+          <Button>
           <FaSignOutAlt />
-          Logout
+          <Button>Logout</Button>
+          </Button>
         </div>
       </div>
     </Fragment>

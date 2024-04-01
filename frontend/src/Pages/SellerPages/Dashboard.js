@@ -137,9 +137,9 @@ const Dashboard = () => {
           <tr>
             <th>Product Image</th>
             <th>Product Name</th>
-            <th>Selling Price</th>
-            <th>Stock Left</th>
             <th>Price</th>
+            <th>Stock Left</th>
+            <th> Selling Price</th>
             <th>Update Product</th>
             <th>Delete Product</th>
           </tr>
@@ -152,7 +152,7 @@ const Dashboard = () => {
                 {d.images.length==0&&<img src={handm} alt="productphoto"/>}
               </td>
               <td>{d.name}</td>
-              <td>{d.sellingPrice}</td>
+              <td>{d.actualPrice}</td>
               <td>{d.stock}</td>
               <td>{d.sellingPrice}</td>
               <td><Button colorScheme='whatsapp' onClick={(e)=>{setProductToUpdate(d);

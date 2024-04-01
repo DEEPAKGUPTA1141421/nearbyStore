@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import {toast} from "react-toastify";
 import { FaLocationArrow } from "react-icons/fa";
 import { useSocket } from "../../context/SocketProvider";
+import { Heading } from "@chakra-ui/react";
 const InboxUser = () => {
   const socket =useSocket();
   const[socketId,setSocketId]=useState("");
@@ -150,6 +151,7 @@ const InboxUser = () => {
         <h2>Inbox</h2>
       </div>
       <div className="chat-list">
+        {chats&&chats.length==0&&<Heading color="red" textAlign="center">No Chat Till Now</Heading>}
         {chats&&chats.length>0&&chats.map((chat,index) => (
           <div key={index} className={`chat-item ${selelctedchat===chat._id ? 'selected-chat' : ''}`} onClick={(e)=>handleSeleted(chat._id)}>
             <div className="chat-info">
@@ -163,7 +165,7 @@ const InboxUser = () => {
       {
         selelctedchat!==undefined&&<div className="message-container" ref={messageContainerRef}>
         {messages&&messages.length>0&&messages.map((message, index) => (
-            <div key={index}  className={`message ${message.sender._id===user._id ? 'sent-by-current-user' : 'sent-by-other-user'}`}>
+            <div key={index}  className={`message ${message.sender._id!==user._id ? 'sent-by-other-user' : 'sent-by-current-user'}`}>
                 {/* Render your message content here */}
                 {message.content}
             </div>
@@ -172,7 +174,8 @@ const InboxUser = () => {
       }
       <div className="chat-input-container">
         {socketId}
-            <input
+            <>
+            {chats.length>0&&<><input
                 type="text"
                 placeholder="Type a message..."
                 value={content}
@@ -181,7 +184,8 @@ const InboxUser = () => {
             />
             <button disabled={content.trim() === ''||selelctedchat===undefined} onClick={handleSendMessage} className="send-button">
                 <FaLocationArrow lassName="send-icon"/>
-            </button>
+            </button></>}
+            </>
         </div>
     </div>}
     </>
