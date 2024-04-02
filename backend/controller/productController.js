@@ -144,7 +144,7 @@ module.exports.deleteProduct = async (req, res, next) => {
 
 module.exports.searchProducts = async (req, res, next) => {
   try {
-    console.log("hello dost",req.params.category);
+    console.log("checking params",req.query);
     let filterQuery = {};
     let searchTerm = req.query.searchTerm || "";
     console.log(searchTerm);

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "../styles/ProfilePage/ProfileUser.css";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { Button } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Image } from "@chakra-ui/react";
 import { server } from "../../FixedUrl";
+import { toast } from "react-toastify";
+import { loaduser } from "../../actions/userAction";
 const ProfileUser = () => {
   const{user}=useSelector((state)=>state.userreducer);
   console.log("user",user);
@@ -16,33 +18,7 @@ const ProfileUser = () => {
     zipCode: "854331",
   });
   const [updated, setUpdated] = useState(false);
-
-  const fetchUserData = async () => {
-    try {
-      console.log("checkid",user._id);
-      const { data } = await axios.get(
-        `${server}/user/get/${user._id}`
-      );
-
-      if (data.success) {
-        setUserData({
-          name: data.user.fullname,
-          email: data.user.email,
-          address1: data.user.address.address1,
-          address2: data.user.address.address2,
-          phoneNumber: data.user.contactNumber,
-          zipcode: data.user.address.postalCode,
-        });
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  // useEffect(() => {
-  //   fetchUserData();
-  // }, []);
-
+  const dispatch=useDispatch();
   const handleChange = (e) => {
     setUserData({
       ...userData,
@@ -51,8 +27,10 @@ const ProfileUser = () => {
   };
 
   const handleSubmit = async (e) => {
+    console.log("1");
     e.preventDefault();
     try {
+    console.log("1");
       const formData = new FormData();
       formData.append("fullname", userData.name);
       formData.append("email", userData.email);
@@ -62,16 +40,18 @@ const ProfileUser = () => {
       formData.append("address2", userData.address2);
 
       const { data } = await axios.put(
-        `${server}/user/update/${user._id}`,
-        formData
+        `${server}/user/update/${user._id}`,formData
       );
-
+    console.log("1");
+      console.log("updated user",data);
       if (data.success) {
+        toast.success("User Update Succesfully");
         setUpdated(true);
       }
-
-      fetchUserData();
-
+      else{
+        toast.error("User Update Succesfully");
+      }
+      dispatch(loaduser());
       console.log(data);
     } catch (err) {
       console.log(err);
@@ -81,7 +61,14 @@ const ProfileUser = () => {
   return (
     <div className="profile-form-container">
       <div className="profile-image-container">
-        <div className="profile-image"></div>
+        <div className="profile-image">
+        <Image
+  borderRadius='full'
+  boxSize='150px'
+  src='https://bit.ly/dan-abramov'
+  alt='Dan Abramov'
+/>
+        </div>
       </div>
       <div className="form-columns">
         <div className="form-column">

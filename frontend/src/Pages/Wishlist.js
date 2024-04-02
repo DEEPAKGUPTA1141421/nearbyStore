@@ -10,6 +10,7 @@ import { Heading } from "@chakra-ui/react";
 const Wishlist = () => {
   const [wishlistItems, setwishlistItems] = useState([]);
   const [isMounted, setIsMounted] = useState(false);
+  const[wishlistLoading,setWishlistLoading]=useState(false);
   const { user } = useSelector((state) => state.userreducer);
   console.log("user", user);
 

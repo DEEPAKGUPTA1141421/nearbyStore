@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/Login.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { createRider } from "../../actions/riderActions";
 import BackIcon from "../../BackIcon";
@@ -17,14 +17,22 @@ import {
   FormLabel,
   FormErrorMessage,
 } from "@chakra-ui/react";
+import { server } from "../../FixedUrl";
 const CreateRider = ({ active, setActive }) => {
   const dispatch = useDispatch();
+  const { isAuthenticated, user } = useSelector((state) => state.userreducer);
   const [imageUrl, SetImageUrl] = useState("");
   const [url, setUrl] = useState("");
   const navigate = useNavigate();
+  useEffect(() => {
+    if (!isAuthenticated) {
+      toast.error("First Become User Then be Rider");
+      navigate("/");
+    }
+  }, []);
   const initialState = {
     name: "",
-    email: "",
+    email: user.email,
     phoneNumber: "",
     city: "",
     adhaharNumber: "",
@@ -42,8 +50,7 @@ const CreateRider = ({ active, setActive }) => {
     let isValid = true;
     for (const key in formData) {
       if (formData[key] === "" || formData[key] === undefined) {
-        errors[key] = "This field is required";
-        isValid = false;
+        return false;
       }
     }
     return isValid;
@@ -60,19 +67,27 @@ const CreateRider = ({ active, setActive }) => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log(formData);
-      dispatch(createRider(formData));
-      toast.success("You Can Now Acceess Your Profile");
-      navigate("/");
-    } else {
-      toast.error("Please Fill All The Form");
+    const userdata = new FormData();
+    userdata.append("role", "rider");
+    let { data } = await axios.put(
+      `${server}/user/update/${user._id}`,
+      userdata
+    );
+    if (data.success === false) {
+      toast.error("user can't be rider");
+      return;
     }
+      if(uploadImage()) {
+        console.log(formData);
+        dispatch(createRider(formData));
+        toast.success("You Can Now Acceess Your Profile");
+        navigate("/");
+      }
   };
   const uploadImage = async (e) => {
     if (!imageUrl) {
       toast.error("select image to upload the image");
-      return;
+      return false;
     }
     const formdata = new FormData();
     formdata.append("file", imageUrl);
@@ -85,6 +100,7 @@ const CreateRider = ({ active, setActive }) => {
     console.log(data.secure_url);
     setUrl(data.secure_url);
     setFormData({ ...formData, imageofrider: data.secure_url });
+    return data.success;
   };
   return (
     <>
@@ -289,6 +305,7 @@ const CreateRider = ({ active, setActive }) => {
                 <Input
                   type="email"
                   name="email"
+                  readOnly
                   value={formData.email}
                   onChange={handleChange}
                 />
@@ -402,13 +419,7 @@ const CreateRider = ({ active, setActive }) => {
                   onChange={handleImageChange}
                 />
               </FormControl>
-              <Button mt={4} colorScheme="teal" onClick={uploadImage} w="100%">
-                Upload Image
-              </Button>
-              <Button mt={4} colorScheme="teal" onClick={handleSubmit} w="100%">
-                Submit
-              </Button>
-              <Button mt={4} colorScheme="teal" onClick={handleSubmit} w="100%">
+              <Button  mt={4} colorScheme="teal" onClick={handleSubmit} w="100%">
                 Submit
               </Button>
             </Box>

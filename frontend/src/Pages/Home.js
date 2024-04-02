@@ -26,7 +26,9 @@ import {
   CardHeader,
   Heading,
   Input,
+  Skeleton,
   Text,
+  Stack,
 } from "@chakra-ui/react";
 import Crousel from "./mainsection/Crousel";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
@@ -35,7 +37,7 @@ import { loadProductOfAShopitem } from "../actions/sellerAction";
 import { GiButterToast } from "react-icons/gi";
 const Home = () => {
   const [searchText, setSearchText] = useState("");
-  const[currentIndex,setCurrentIndex]=useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [dropdownmenu, setdropdownmenu] = useState(false);
   const { user } = useSelector((state) => state.userreducer);
   const [role, setRole] = useState();
@@ -44,11 +46,11 @@ const Home = () => {
   const [showResults, setShowResults] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [active, setActive] = useState(1);
-   const [shop, setShop] = useState([]);
+  const [shop, setShop] = useState([]);
   const navigate = useNavigate();
   const searchInputRef = useRef(null);
   const dispatch = useDispatch();
-
+  const [searchLoading, setSearchLoading] = useState(false);
   const handlebecomeseller = (e) => {
     navigate("/becomeSeller");
   };
@@ -60,6 +62,7 @@ const Home = () => {
   };
 
   const handleSearchChange = async (e) => {
+    setSearchLoading(true);
     const query = e.target.value;
     setSearchText(query);
 
@@ -72,7 +75,7 @@ const Home = () => {
 
         setSearchResults(response.data.products);
         setShowResults(true);
-
+        setSearchLoading(false);
         console.log(searchResults);
       } catch (error) {
         console.error("Error fetching search results:", error);
@@ -80,6 +83,7 @@ const Home = () => {
     } else {
       setSearchResults([]);
       setShowResults(false);
+      setSearchLoading(false);
     }
   };
 
@@ -112,14 +116,14 @@ const Home = () => {
       setRole(user.role);
     }
   });
-  const nextshop=()=>{
-    if(currentIndex==4){
+  const nextshop = () => {
+    if (currentIndex == 4) {
       setCurrentIndex(0);
       return;
     }
-    let d=currentIndex+1%5;
+    let d = currentIndex + (1 % 5);
     setCurrentIndex(d);
-  }
+  };
   const fetchShop = async () => {
     try {
       const { data } = await axios.get(`${server}/shop/gettopshop`);
@@ -128,7 +132,7 @@ const Home = () => {
       console.log("err", err);
     }
   };
-  useEffect(() =>{
+  useEffect(() => {
     fetchShop();
   }, []);
   return (
@@ -153,10 +157,14 @@ const Home = () => {
               </Button>
             </button>
             {searchText && (
-              <div className="result-container">
+              <div className="result-container" style={{ zIndex: "100" }}>
                 {searchResults.map((result) => (
                   <Link to={`/product/${result._id}`}>
-                    <div key={result.id} className="search-result-div">
+                    <div
+                      key={result.id}
+                      className="search-result-div"
+                      style={{ zIndex: "100" }}
+                    >
                       <img
                         // src="https://www.parivarceremony.com/media/catalog/product/cache/62408a38a401bb86dbe3ed2f017b539f/p/2/p2167sr06.jpg"
                         src={result.images[0]}
@@ -166,6 +174,19 @@ const Home = () => {
                     </div>
                   </Link>
                 ))}
+                {searchLoading && (
+                  <Stack>
+                    <Skeleton height="50px" />
+                    <Skeleton height="50px" />
+                    <Skeleton height="50px" />
+                    <Skeleton height="50px" />
+                    <Skeleton height="50px" />
+                    <Skeleton height="50px" />
+                    <Skeleton height="50px" />
+                    <Skeleton height="50px" />
+                    <Skeleton height="50px" />
+                  </Stack>
+                )}
               </div>
             )}
           </div>
@@ -174,7 +195,7 @@ const Home = () => {
               <React.Fragment>
                 {" "}
                 {/* or <></> for short */}
-                {role !== "seller" && (
+                {role !== "seller" &&role!="rider" && (
                   <button
                     className="become-seller-btn"
                     onClick={handlebecomeseller}
@@ -182,7 +203,7 @@ const Home = () => {
                     <Button>Become Seller</Button>
                   </button>
                 )}
-                {role !== "rider" && (
+                {role !== "rider"&&role!="seller" && (
                   <button
                     className="become-seller-btn"
                     onClick={handlebecomerider}
@@ -295,10 +316,12 @@ const Home = () => {
                     top: "350px",
                     zIndex: "20",
                     left: "130px",
-                    display: currentIndex === index ? "block" : "none"
+                    display: currentIndex === index ? "block" : "none",
                   }}
                 >
-                  <Button colorScheme="red" onClick={nextshop}>Go To Next Shop</Button>
+                  <Button colorScheme="red" onClick={nextshop}>
+                    Go To Next Shop
+                  </Button>
                   <CardHeader>
                     <Heading
                       size="md"
@@ -307,16 +330,23 @@ const Home = () => {
                       Trending Store
                     </Heading>
                     <Heading size="xl">Visit {s.shopname}</Heading>
-                    <Button colorScheme="gray">Shop Location     {s.location}</Button>
-                    <Button colorScheme="red" style={{position:"relative",top:"10px"}}>Shop Category     {s.category}</Button>
+                    <Button colorScheme="gray">
+                      Shop Location {s.location}
+                    </Button>
+                    <Button
+                      colorScheme="red"
+                      style={{ position: "relative", top: "10px" }}
+                    >
+                      Shop Category {s.category}
+                    </Button>
                   </CardHeader>
                   <CardBody>
-                    <Text>
-                      Visit {s.shopname} to Explore Varoius  Project 
-                    </Text>
+                    <Text>Visit {s.shopname} to Explore Varoius Project</Text>
                   </CardBody>
                   <CardFooter>
-                  <Link to={`/shoppage/${s._id}`}><Button colorScheme="blue">View Store</Button></Link>
+                    <Link to={`/shoppage/${s._id}`}>
+                      <Button colorScheme="blue">View Store</Button>
+                    </Link>
                   </CardFooter>
                 </Card>
               </>

@@ -8,8 +8,10 @@ import "./styles/Cart.css";
 import { decreasecount, increasecount, loadcartitem, setcartitem } from "../actions/cartAction";
 import { toast } from "react-toastify";
 import BackIcon from "../BackIcon";
+import { Skeleton, Stack } from "@chakra-ui/react";
 const CartPage = () => {
   const [cart, setCart] = useState([]);
+  const[cartLoading,setCartLoading]=useState(false);
   const [quantities, setQuantities] = useState({});
   console.log("quanties",quantities);
   console.log(quantities);
@@ -40,13 +42,18 @@ const CartPage = () => {
     }
   };
   useEffect(() => {
+    setCartLoading(true);
     dispatch(loadcartitem());
+    setCartLoading(false);
   },[]);
   useEffect(() =>{
+    setCartLoading(true);
     setCart(cartitem);
+    setCartLoading(false);
   }, [cartitem]);
 
   const deleteItemFromCart = async (id) => {
+    setCartLoading(true);
     console.log(id);
     const productId = id;
     console.log(productId);
@@ -63,12 +70,15 @@ const CartPage = () => {
         );
         dispatch(loadcartitem());
       }
+      setCartLoading(false);
     } catch (err) {
+      setCartLoading(false);
       console.log(err);
     }
   };
 
   const handleMoveFromCartToWishlist = async (id) => {
+    setCartLoading(true);
     console.log("handlechhnage");
     const productId = id;
     console.log(productId);
@@ -88,7 +98,9 @@ const CartPage = () => {
       } else {
         alert("Item already in wishlist");
       }
+      setCartLoading(false);
     } catch (err) {
+      setCartLoading(false);
       toast.error(err.message);
       console.log(err);
     }
@@ -108,7 +120,14 @@ const CartPage = () => {
     <div className="main-container">
       <BackIcon/>
       <div className="cart-page">
+        {cartLoading&&
+          <Stack>
+          <Skeleton height='200px'/>
+          <Skeleton height='200px'/>
+          <Skeleton height='200px'/>
+        </Stack>}
         {cart&&cart.length>0&&cart.map((product) => (
+          <>
           <div key={product.productId._id} className="cart-item">
             <div className="product-image">
               <img
@@ -166,6 +185,7 @@ const CartPage = () => {
               </div>
             </div>
           </div>
+          </>  
         ))}
         {cart&&cart.length==0&&<h1>No Product In The Cart</h1>}
         {cart.length > 0 && (

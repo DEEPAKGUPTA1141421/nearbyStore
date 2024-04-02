@@ -214,9 +214,10 @@ module.exports.getUser = async (req, res, next) => {
 module.exports.updateUser = async (req, res, next) => {
   const id = req.params.id;
   const data = req.body;
-
+  console.log("body",req.body);
   try {
     const updatedUser = await User.findByIdAndUpdate(id, data, { new: true });
+    console.log(updatedUser);
     if (updatedUser) {
       res.status(200).json({
         success: true,
