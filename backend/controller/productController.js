@@ -84,7 +84,7 @@ module.exports.getProduct = async (req, res, next) => {
   let productId = req.params.id;
 
   try {
-    const product = await Product.findById(productId);
+    const product = await Product.findById(productId).populate("shopId").exec();
     if (product) {
       res.status(200).json({
         success: true,
