@@ -3,12 +3,15 @@ import React, { useEffect, useState } from "react";
 import { server } from "../../FixedUrl";
 import { toast } from "react-toastify";
 import SingleOrderList from "./SingleOrderList";
+import { useSelector } from "react-redux";
 const Orders = () => {
+  const {shop}=useSelector((state) => state.sellerreducer);
+  console.log("state",shop);
   const [allorder, setAllorder] = useState([]);
   const fetchData = async () => {
     try {
       const { data } = await axios.get(
-        `${server}/shop/getallorderofshop/65c89e49776c9d6a9ba2b14e`
+        `${server}/shop/getallorderofshop/${shop._id}`
       );
       console.log(data);
       if (data.success) {

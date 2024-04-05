@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const sendEmail = require("../utils/sendMail");
 const Product = require("../models/product");
 const Track = require("../models/tracking");
-
+const Order=require("../models/order");
 const sendToken = async (user, statusCode, message, res) => {
   const token = user.getToken();
   console.log("hello",token);
@@ -259,26 +259,36 @@ module.exports.deleteUser = async (req, res, next) => {
 module.exports.orders = async (req, res, next) => {
   try {
     const id = req.user._id;
-    const user = await User.findById(id)
-      .populate({
-        path: "order",
-        populate: {
-          path: "orderId", // Populate the product field in orderItems
-        },
-      })
-      .exec();
-    console.log(user);  
-    if (!user) {
-      next(new customError("orders for this user is not found", 404))
-        .populate("order")
-        .exec();
-    } else {
-      res.status(200).json({
-        success: true,
-        message: "All Orders Received at dashboard",
-        order: user.order,
-      });
+    const order=await Order.find({user:id});
+    if(!order){
+      next(new customError("no product of this user"),501);
     }
+    else{
+      res.status(200).json({
+        success:true,
+        message:"ALL ORDER OF LOGIN USER",
+        order:order
+      })
+    }
+    // const user = await User.findById(id)
+    //   .populate({
+    //     path: "order",
+    //     populate: {
+    //       path: "orderId", // Populate the product field in orderItems
+    //     },
+    //   })
+    //   .exec();
+    // console.log(user);  
+    // if (!user) {
+    //   next(new customError("orders for this user is not found", 404))
+    //     .populate("order")
+    //     .exec();
+    // } else {
+    //   res.status(200).json({
+    //     success: true,
+    //     message: "All Orders Received at dashboard",
+    //     order: user.order,
+    //   });
   } catch (err) {
     next(new customError(err.message, 501));
   }

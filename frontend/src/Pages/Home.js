@@ -144,6 +144,7 @@ const Home = () => {
         <div className="secondclass">
           <div className="searchbox" ref={searchInputRef}>
             <Input
+              style={{position:"relative",top:"10px"}}
               color="white"
               type="text"
               className="search-input"
@@ -200,7 +201,7 @@ const Home = () => {
                     className="become-seller-btn"
                     onClick={handlebecomeseller}
                   >
-                    <Button>Become Seller</Button>
+                    <Button style={{position:"relative",right:"10px"}}>Become Seller</Button>
                   </button>
                 )}
                 {role !== "rider"&&role!="seller" && (

@@ -3,7 +3,7 @@ import axios from "axios";
 import "../styles/ProfilePage/OrdersUser.css";
 import { useSelector } from "react-redux";
 import { server } from "../../FixedUrl";
-
+import handm from "../../images/handm.png";
 const OrdersUser = () => {
   const [orders, setOrders] = useState([]);
   const[isMounted,setIsMounted]=useState(false);
@@ -16,7 +16,15 @@ const OrdersUser = () => {
       const { data } = await axios.get(
         `${server}/user/getallorders`,axiosConfig
       );
-      setOrders(data.order);
+      console.log("order checkk",data);
+      // const pro=[];
+      // for(let i=0;i<data.order.length;i++){
+      //   for(let j=0;j<data.order[i].orderItems.length;j++){
+      //     pro.push(data.order[i].orderItems[j]);
+      //   }
+      // }
+      // console.log("pro",pro);
+        setOrders(data.order);
     } catch (err) {
       console.log(err);
     }
@@ -38,6 +46,7 @@ const OrdersUser = () => {
       <table className="orders-table">
         <thead>
           <tr>
+            <th>order Image</th>
             <th>Product Name</th>
             <th>Order Placed Date</th>
             <th>Status</th>
@@ -47,21 +56,24 @@ const OrdersUser = () => {
         </thead>
         <tbody>
           {orders&&orders.length>0&&orders.map((order) => (
-            <tr key={order.orderId._id}>
+            <tr key={order._id}>
               <td>
-                {order.orderId.orderItems && order.orderId.orderItems.length > 0
-                  ? order.orderId.orderItems[0].name
+                <img src={handm} alt="orderimage"/>
+              </td>
+              <td>
+                {order&& order.orderItems.length > 0
+                  ? order.orderItems[0].name.substring(0,30)
                   : "N/A"}
               </td>
-              <td>{new Date(order.orderId.createdAt).toLocaleString()}</td>
-              <td>{order.orderId.orderStatus}</td>
-              <td>{order.orderId.totalPrice}</td>
+              <td>{new Date(order.createdAt).toLocaleString()}</td>
+              <td>{order.orderStatus}</td>
+              <td>{order.totalPrice}</td>
               <td>
-                {order.orderId.shippingInfo.address},{" "}
-                {order.orderId.shippingInfo.city},{" "}
-                {order.orderId.shippingInfo.state},{" "}
-                {order.orderId.shippingInfo.country} -{" "}
-                {order.orderId.shippingInfo.postalCode}
+                {order.shippingInfo.address},{" "}
+                {order.shippingInfo.city},{" "}
+                {order.shippingInfo.state},{" "}
+                {order.shippingInfo.country} -{" "}
+                {order.shippingInfo.postalCode}
               </td>
             </tr>
           ))}

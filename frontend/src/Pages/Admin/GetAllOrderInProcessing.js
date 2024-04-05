@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { server } from '../../FixedUrl';
 import "../styles/sellerPage/Dashboard.css";
 import handm from "../../images/handm.png";
+import { Button } from '@chakra-ui/react';
+import {toast} from "react-toastify";
 const GetAllOrderInProcessing = () => {
     const[allorder,setAllOrder]=useState();
     const loadorder=async()=>{
@@ -28,6 +30,7 @@ const GetAllOrderInProcessing = () => {
         if(data.success){
             console.log("success");
             loadorder();
+            toast.success("Allocated To Admin");
         }
         else{
             console.log("failed");
@@ -70,13 +73,15 @@ const GetAllOrderInProcessing = () => {
           {allorder&&allorder.length>0&&allorder.map((order,index) => (
             <tr key={index}>
               <td>
-                <img src={handm} alt="productphoto"/>
+                {/* <img src={handm} alt="productphoto"/> */}
+                {order.productId.images.length>0&&<img src={order.productId.images[0]}/>}
+                {order.productId.images.length==0&&<img src={handm} alt="productphoto"/>}
               </td>
               <td>{order.productId.name}</td>
               <td>{order.productId.sellingPrice}</td>
               <td>{order.status}</td>
               <td>{formatDate(order.createdAt)}</td>
-              <td><button onClick={() => allocateorder(order._id)}>AllocateToRider</button></td>
+              <td><Button colorScheme='red' onClick={() => allocateorder(order._id)}>AllocateToRider</Button></td>
             </tr>
           ))}
         </tbody>
